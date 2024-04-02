@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+enum Role {
+  user
+  admin
+  roundadmin
+  validator
+  userWhitelist
+}
+
+model Todo {
+  id        String   @id @default(uuid())
+  title     String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                       String  @id @default(uuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?
+  refresh_token_expires_at Int?
+  access_token             String?
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?
+  session_state            String?
+  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Transaction {
+  id                String   @id @default(uuid())
+  transactionHash   String   @unique
+  blockHash         String
+  blockNumber       BigInt
+  transactionIndex  BigInt
+  from              String
+  to                String
+  value             BigInt
+  gasUsed           BigInt
+  effectiveGasPrice BigInt
+  status            BigInt
+  createdAt         DateTime @default(now())
+
+  user User @relation(fields: [from], references: [id])
+}
+
+enum KYCStatus {
+  unverified
+  pending
+  approved
+  rejected
+}
+
+// model KYC (
+//     id SERIAL PRIMARY KEY,
+//     user_id INTEGER REFERENCES users(id),
+//     document_type VARCHAR(50),
+//     document_number VARCHAR(50),
+//     document_front_url TEXT,
+//     document_back_url TEXT,
+//     verification_status VARCHAR(50),
+//     verification_date TIMESTAMP
+// );
+model KYC {
+  id                     String     @id @default(uuid())
+  userId                 String
+  documentType           String?
+  documentNumber         String?    @unique
+  documentFrontUrl       String?
+  documentBackUrl        String?
+  country                String?
+  address                String?
+  passwordHashPrivateKey String?    @default("")
+  verificationStatus     KYCStatus? @default(unverified)
+  verificationDate       DateTime?  @updatedAt
+  createdAt              DateTime   @default(now())
+  reason                 String?
+  badFields              String[]   @default([])
+  user                   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                   String                 @id @default(uuid())
+  email                String?                @unique
+  name                 String?
+  lastName             String?
+  phone                String?                @unique
+  nationality          String?
+  country              String?
+  password             String?
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  roles                Role[]                 @default([user])
+  status               String                 @default("unconfirmed")
+  emailVerified        DateTime?
+  isActive             Boolean                @default(true)
+  image                String?
+  documentImageBack    String?
+  documentImageFront   String?
+  documentType         String?
+  documentNumber       String?                @unique
+  accounts             Account[]
+  sessions             Session[]
+  address              String?                @default("")
+  isMetamask           Boolean                @default(false)
+  verified             KYCStatus              @default(unverified)
+  transactions         Transaction[]
+  KYC                  KYC[]
+  addressAndPrivateKey AddressAndPrivateKey[]
+}
+
+model AddressAndPrivateKey {
+  id         String   @id @default(uuid())
+  userId     String
+  address    String   @unique
+  privateKey String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

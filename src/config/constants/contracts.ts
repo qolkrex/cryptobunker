@@ -1,0 +1,39 @@
+/**
+ * @MAINNETCONTRACT
+ */
+export const MOON_CONTRACT = {
+  swap: "0xbd651583D386e9F3b3C1c026a57C18A57ee03cC5",
+  swapRouter: "0xe6FE3Db4c5A2e4a9Ab3301201b38724E578B35cA",
+  factory: "0xf36AE63d89983E3aeA8AaaD1086C3280eb01438D",
+};
+export const BSC_CONTRACT = {
+  swap: "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+  swapRouter: "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+  factory: "0xca143ce32fe78f1f7019d7d551a6402fc5350c73",
+  goldmakToken: "0xddBA4511EC05695b38C51c6857660d970Cf61244",
+};
+
+// Address Julian
+// 0x11c3e8eDCEd034cFCbCF88be14Dc19cB169d9951 ADMIN ADDRESS
+// 0x4415B2Bfc4445b33C17c1A0b0D10cC18e9F928D0 TO COST
+
+export const MOON_CONTRACT_WAR = {
+  ContractsPermit: "0xe7d90B6B3c80CAc15082dade03f91570d8f4fD92",
+  Oracle: "0x9355e9081680d7ab68F37Bb8a28A218041C1fb9c",
+};
+
+/**
+ * @TESNETCONTRACT
+ */
+
+export const TESNET_CONTRACT = {
+  swap: "",
+  swapRouter: "",
+  factory: "",
+  goldmakToken: "0xddBA4511EC05695b38C51c6857660d970Cf61244",
+};
+
+export const TESNET_CONTRACT_WAR = {
+  ContractsPermit: "",
+  Oracle: "",
+};

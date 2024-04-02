@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  goldmakDB:
+    image: postgres:15.3
+    container_name: goldmakDB
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: goldmak
+      POSTGRES_PASSWORD: goldmak
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+  pgadmin:
+    container_name: pgadmin-goldmak
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    depends_on:
+      - goldmakDB

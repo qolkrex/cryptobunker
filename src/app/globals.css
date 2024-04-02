@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  scroll-behavior: smooth;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+} */
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  scroll-behavior: smooth;
+}
+
+.text-title {
+  background: #121fcf;
+  background: linear-gradient(to bottom,
+      #9d6b0b 0%,
+      #f7a813 30%,
+      #ffcf74 60%,
+      #f1a412 80%,
+      #9d6b0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-golden {
+  background: #121fcf;
+  background: linear-gradient(to bottom,
+      #9d6b0b 0%,
+      #f7a813 30%,
+      #ffcf74 60%,
+      #f1a412 80%,
+      #9d6b0b 100%);
+}
+
+/* fonts */
+
+@font-face {
+  font-family: SoccerLeage;
+  src: url("../../public/fonts/SoccerLeague.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: SoccerLeageItalic;
+  src: url("../../public/fonts/SoccerLeague-Italic.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: MyriadPro-Regular;
+  src: url("../../public/fonts/MyriadPro-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Myriad-Variable-Concept;
+  src: url("../../public/fonts/MyriadVariable-Concept.otf") format("opentype");
+}
+
+.animate-fade-left {
+  animation: fadeLeft 0.5s ease-in-out;
+}
+
+@keyframes fadeLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.scrollbar {
+  scrollbar-width: 10px;
+  scrollbar-color: #f1a412 #2f2f2f;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #2f2f2f;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #f1a412;
+  border-radius: 6px;
+  border: 3px solid #2f2f2f;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #f1a412;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  /* Firefox */
+}
+
+.p-datatable .p-datatable-tbody>tr {
+  background: #414141;
+  color: white
+}
+
+.p-datatable .p-datatable-thead>tr>th {
+  color: white;
+  background: #414141;
+}
+
+.p-datatable .p-datatable-tfoot>tr>td {
+  color: white;
+  background: #414141;
+}
