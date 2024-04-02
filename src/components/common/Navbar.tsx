@@ -43,19 +43,6 @@ export const Navbar = () => {
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 py-6">
           <Link href="/" className="flex items-center  rtl:space-x-reverse">
             {/* <Image
-                            // src={'/img/encabezado/g-token.png'}
-                            src={'/img/logo.svg'}
-                            alt="logo"
-                            width={32}
-                            height={32}
-                            className='object-contain h-8 w-8'
-                        />
-                        <span className="self-center text-2xl font-title whitespace-nowrap text-white flex items-center mt-1 relative -ml-1"
-                            style={{
-                                fontSize: "2.4rem"
-                            }}
-                        >OLDMAK</span> */}
-            <Image
               src={"/img/logo.svg"}
               alt="logo"
               width={32}
@@ -65,7 +52,8 @@ export const Navbar = () => {
                 e.currentTarget.src =
                   "https://res.cloudinary.com/giandiaz/image/upload/v1710799117/c8fun2tj1hphk2sx0uuc.png";
               }}
-            />
+            /> */}
+            <h1 className="text-white text-3xl">DGSOL</h1>
             {/* <Image
                             src={'/img/logo.png'}
                             alt="logo"

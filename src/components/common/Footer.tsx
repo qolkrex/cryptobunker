@@ -104,7 +104,7 @@ export const Footer = () => {
                   </li>
                   <li>
                     <Link href="/#faq" className="hover:underline">
-                      Usos de GMK
+                      Usos de DGSOL
                     </Link>
                   </li>
                 </ul>
@@ -116,7 +116,7 @@ export const Footer = () => {
                 <ul className="text-black">
                   <li className="mb-4">
                     <Link href="/" className="hover:underline ">
-                      contacto@goldmak.io
+                      contacto@dgsol.com
                     </Link>
                   </li>
                 </ul>
@@ -126,7 +126,7 @@ export const Footer = () => {
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div className="sm:flex sm:items-center sm:justify-between">
             <span className="text-sm text-white sm:text-center ">
-              © 2023 Goldmak. All Rights Reserved.
+              © 2024 DGSOL. All Rights Reserved.
             </span>
             <div className="flex mt-4 sm:justify-center sm:mt-0">
               <span className="text-sm text-white sm:text-center ">
