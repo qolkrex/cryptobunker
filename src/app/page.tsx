@@ -46,7 +46,7 @@ export default function Home() {
                 </p>
                 <p className="w-full max-w-7xl text-center text-balance text-2xl text-white/80 shadow-md drop-shadow-md font-bold font-paragraph">
                   Está diseñado para brindarte una solución integral para tus
-                  necesidades de intercambio de criptomonedas,
+                  necesidades de intercambio de criptomonedas.
                 </p>
                 <Link
                   href="/register"
