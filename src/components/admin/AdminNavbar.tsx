@@ -77,7 +77,7 @@ export const AdminNavbar = () => {
           <div className="flex items-center">
             <div className="flex items-center flex-shrink-0">
               <Button
-                className="text-white px-5 py-3 bg-yellow-600 hover:bg-yellow-800 mr-10"
+                className="text-white px-5 py-3 bg-primary hover:bg-primary/70 mr-10"
                 onClick={() =>
                   session?.user?.verified === "approved" &&
                   toggleSideBar(!sideBarOpen)
@@ -128,14 +128,15 @@ export const AdminNavbar = () => {
                 )}
               </Button>
 
-              <Link href="/">
-                <Image
-                  src="/img/logo.png"
+              <Link href="/" className="text-white text-2xl font-bold ">
+                CryptoBunker
+                {/* <Image
+                  src="/img/logo.webp"
                   alt="1"
                   width={100}
                   height={100}
                   className="w-full h-full object-cover z-10 hidden md:block"
-                />
+                /> */}
               </Link>
             </div>
           </div>

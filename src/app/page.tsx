@@ -14,7 +14,7 @@ export default function Home() {
       <>
         <div className="w-full  bg-white relative min-h-screen">
           <main
-            className="flex w-full min-h-screen flex-col items-center justify-start md:p-24 p-16 bg-hero bg-cover bg-no-repeat bg-top aspect-video  bg-s
+            className="flex w-full min-h-screen flex-col items-center justify-start md:p-24 p-16 bg-hero bg-cover bg-no-repeat bg-top aspect-video
               z-10
               relative
               overflow-hidden before:content-['']
@@ -22,7 +22,7 @@ export default function Home() {
               before:inset-0
               before:block
               before:bg-black
-              
+              before:w-
               before:opacity-75
               before:z-[-5] max-w-9xl mx-auto
             "
@@ -50,7 +50,7 @@ export default function Home() {
                 </p>
                 <Link
                   href="/register"
-                  className="w-full max-w-[300px] py-4 mt-5 text-xl text-center font-semibold text-black bg-primary rounded-md font-paragraph"
+                  className="w-full max-w-[300px] py-4 mt-5 text-xl text-center font-semibold text-white bg-primary hover:bg-primaryHover transition-colors rounded-md font-paragraph"
                 >
                   ¡ÚNETE AHORA!
                 </Link>

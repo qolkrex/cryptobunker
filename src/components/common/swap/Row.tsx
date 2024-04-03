@@ -109,7 +109,7 @@ const Component: FC<RowProps> = ({
       <div className="flex flex-col rounded-xl border">
         <div className="flex flex-row items-center justify-between">
           <div
-            className="flex flex-row gap-2 items-center justify-between hover:bg-gray-100 hover:bg-opacity-65 cursor-pointer py-2 px-4 border-r min-w-36 md:min-w-44"
+            className="flex flex-row gap-2 items-center justify-between hover:bg-gray-100 hover:bg-opacity-65 cursor-pointer py-2 px-4 border-r min-w-36 md:min-w-44 rounded-tl-xl rounded-bl-xl"
             onClick={() => id !== 1 && setOpen(true)}
           >
             <div className="flex items-center justify-center">

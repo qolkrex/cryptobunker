@@ -26,7 +26,7 @@ export const LogoutButton = () => {
 
   if (status === "authenticated" && session) {
     return (
-      <ButtonBase variant="alert" onClick={logout}>
+      <ButtonBase variant="primary" onClick={logout}>
         <span className="flex items-center justify-center gap-2">
           <i className="pi pi-sign-out"></i>
           Salir

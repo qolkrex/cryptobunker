@@ -94,7 +94,7 @@ export const FormKyc = () => {
         {step === 0 && (
           <>
             <h1 className="text-3xl text-start font-bold mb-4 text-black">
-              Registro GOLDMAK
+              Registro CryptoBunker
             </h1>
             <div className="w-full max-w-[450px]">
               <label htmlFor="name" className="block w-full">
@@ -181,7 +181,7 @@ export const FormKyc = () => {
           ) : (
             <button
               type="submit"
-              className="w-full items-center bg-primary py-4 px-10 rounded-xl"
+              className="w-full items-center bg-primary py-4 px-10 rounded-xl text-white"
             >
               Registrate
             </button>

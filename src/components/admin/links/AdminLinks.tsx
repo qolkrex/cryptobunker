@@ -15,7 +15,7 @@ const AdminLink: React.FC<NavLinkProps> = ({ href, children, onClick }) => {
         <Link
             href={href}
             onClick={onClick}
-            className={`block py-2 my-1 px-3 text-black  rounded  transition-colors hover:bg-yellow-500 hover:text-white  ${ pathName === href ? 'bg-yellow-500 border-b-2 text-white' : '' }`}
+            className={`block py-2 my-1 px-3 text-black  rounded  transition-colors hover:bg-primary drop-shadow-md hover:text-white  ${ pathName === href ? 'bg-primary border-b-2 text-white' : '' }`}
         >
             {children}
         </Link>

@@ -41,8 +41,8 @@ export default function PageSendAndRecive() {
     },
     GMK: {
       balance: 0,
-      symbol: "GMK",
-      image: "/img/crypto/G_TOKEN.png",
+      symbol: "DGSOL",
+      image: "/img/crypto/dgsol-token-2.webp",
       address: TOKENS.GMK.address,
     },
   });
@@ -214,7 +214,7 @@ export default function PageSendAndRecive() {
             onClick={() => setShow(true)}
             type="button"
             className={`py-3 px-4 hover:bg-gray-500 ${
-              show ? "border-b-2 border-yellow-500 text-primary" : ""
+              show ? "border-b-2 border-primary text-primary" : ""
             }`}
           >
             Enviar
@@ -223,7 +223,7 @@ export default function PageSendAndRecive() {
             onClick={() => setShow(false)}
             type="button"
             className={`py-3 px-4 hover:bg-gray-500 ${
-              !show ? "border-b-2 border-yellow-500 text-primary" : ""
+              !show ? "border-b-2 border-primary text-primary" : ""
             }`}
           >
             Recibir
@@ -274,7 +274,7 @@ export default function PageSendAndRecive() {
                         {coins[activeCoin as keyof typeof coins]?.symbol ===
                         "USDT"
                           ? "Tether"
-                          : "Goldmak"}{" "}
+                          : "DGSOL"}{" "}
                       </span>
                     </div>
                   </div>
@@ -327,13 +327,13 @@ export default function PageSendAndRecive() {
                     <div className="flex justify-between items-center px-4 w-full hover:bg-gray-500 py-5 cursor-pointer">
                       <div className="flex items-center gap-2">
                         <img
-                          src="/img/crypto/G_TOKEN.png"
+                          src="/img/crypto/dgsol-token-2.webp"
                           alt=""
                           className="w-8 h-8 rounded-full"
                         />
-                        <span>GMK</span>
+                        <span>DGSOL</span>
                       </div>
-                      <span>{gmkBalanceOf.toFixed(4)} GMK</span>
+                      <span>{gmkBalanceOf.toFixed(4)} DGSOL</span>
                     </div>
                   </div>
                 </div>
@@ -357,7 +357,7 @@ export default function PageSendAndRecive() {
                   value={amountToSend !== 0 ? amountToSend.toString() : ""}
                 />
                 <span
-                  className="text-orange-400 text-sm absolute right-0 top-0 cursor-pointer"
+                  className="text-primary text-sm absolute right-0 top-0 cursor-pointer"
                   onClick={() =>
                     setamountToSend(
                       Number(
@@ -375,7 +375,7 @@ export default function PageSendAndRecive() {
             <Button
               type="submit"
               loading={loading}
-              className="w-full mt-4 py-2 px-10 bg-yellow-500 hover:bg-yellow-600 hover:ring-yellow-500 p-2 text-white text-center flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full mt-4 py-2 px-10 bg-primary hover:bg-primaryHover hover:ring-primary p-2 text-white text-center flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <p className="mx-auto text-lg font-bold">Enviar</p>
             </Button>

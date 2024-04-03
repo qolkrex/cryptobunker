@@ -42,7 +42,7 @@ export const AdminContent: FC<Props> = ({ cryptos }) => {
         cryptos={cryptos}
         setTotalValueWallet={setTotalValueWallet}
       />
-      <div className="flex flex-col pt-7 pb-5 px-10 mb-8 mt-14 mx-auto w-11/12 md:max-w-[880px] bg-[#F7A813] rounded-3xl text-black relative">
+      <div className="flex flex-col pt-7 pb-5 px-10 mb-8 mt-14 mx-auto w-11/12 md:max-w-[880px] bg-white/65 rounded-3xl text-black relative">
         <img
           src="/img/icons/notificate.svg"
           className="w-[50px] absolute left-[25px] -top-[25px]"

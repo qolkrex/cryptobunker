@@ -107,7 +107,7 @@ export const AdminSidebar = () => {
       icon: "pi pi-wallet",
       children: [
         {
-          label: "Comprar",
+          label: "Swap",
           icon: "pi pi-sync",
           href: "/dashboard/swap",
           role: ["user", "admin", "userWhitelist", "validator"],
@@ -178,25 +178,26 @@ export const AdminSidebar = () => {
       <div
         className={`lg:sticky fixed  top-[103px] h-full ${
           sideBarOpen ? "translate-x-0 w-auto min-w-64" : "-translate-x-full"
-        } transition-all min-h-[90vh] z-50`}
+        } transition-all min-h-[90vh] z-30`}
       >
         <div
-          className={`overflow-hidden flex flex-col bg-white max-w-64 min-h-[80vh] h-[90vh] py-10 overflow-y-auto ${
+          className={`overflow-hidden flex flex-col bg-white max-w-64 min-h-[80vh] h-[90vh] py-10 overflow-y-auto w-full ${
             sideBarOpen
               ? "translate-x-0 w-auto px-5 pr-10 min-w-32"
               : "-translate-x-full w-0 px-0 pr-0"
           } transition-all duration-300 ease-in-out top-0 z-50 shadow-md fixed`}
         >
           {/* <Sidebar visible={visible} onHide={() => setVisible(false)}> */}
-          <div className="w-full flex">
+          <div className="w-full flex text-2xl font-bold tracking-wide">
             <Link href="/dashboard">
-              <Image
-                src="/img/logo.png"
+              CryptoBunker
+              {/* <Image
+                src="/img/logo.webp"
                 alt="1"
                 width={350}
                 height={112}
                 className="w-full h-full object-cover z-10"
-              />
+              /> */}
             </Link>
           </div>
           <div className="flex flex-col py-2 my-2 h-full ">
@@ -223,7 +224,7 @@ const SidebarList: FC<PropsListItems> = ({ items }) => {
     return allowedRoles.some((role) => session?.user?.roles?.includes(role));
   });
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 ">
       {allowedItems?.map((item, index) => (
         <SidebarListItems key={index} item={item} />
       ))}

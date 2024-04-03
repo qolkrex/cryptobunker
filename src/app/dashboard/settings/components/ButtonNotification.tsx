@@ -12,7 +12,7 @@ const ButtonNotification = () => {
         onClick={() => {
           setOpenModal(true);
         }}
-        className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-6 px-8 rounded flex justify-between items-center gap-3 max-w-3xl"
+        className="w-full bg-primary hover:bg-primaryHover text-white font-bold py-6 px-8 rounded flex justify-between items-center gap-3 max-w-3xl"
       >
         <span className="flex justify-center items-center gap-3">
           <svg

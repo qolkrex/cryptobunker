@@ -186,13 +186,13 @@ export const FormLoginEmail = () => {
     <form
       // action={dispatch}
       onSubmit={handleSubmit(handleLogin)}
-      className="flex flex-col w-full max-w-[400px] bg-primary p-10"
+      className="flex flex-col w-full max-w-[400px] bg-white/65 p-10 text-black"
     >
-      <h1 className="text-2xl font-bold mb-4 text-white">
-        Logueate en GoldMak
+      <h1 className="text-2xl font-bold mb-4 text-black">
+        Logueate en CryptoBunker
       </h1>
       <label htmlFor="" className="flex flex-col">
-        <span className="text-white text-base">Email</span>
+        <span className="text-base">Email</span>
         <input
           type="email"
           placeholder="Email"
@@ -297,17 +297,17 @@ export const FormLoginEmail = () => {
       </p>
 
       <div className="mt-2 h-1 bg-white bg-opacity-60" />
-      <button
-        className="px-4 py-2 bg-white text-primary rounded-md hover:bg-opacity-80 transition-all duration-300 ease-in-out flex items-center justify-center gap-2 mt-4"
+      {/* <button
+        className="px-4 py-2 bg-white text-black rounded-md hover:bg-opacity-80 transition-all duration-300 ease-in-out flex items-center justify-center gap-2 mt-4"
         type="button"
         onClick={handleLoginWithMetamask}
       >
         <MetamaskSVG className="w-10 h-10" />
         Conecta con Metamask
-      </button>
+      </button> */}
       {/* divider */}
       <button
-        className="px-4 py-2 bg-white text-primary rounded-md hover:bg-opacity-80 transition-all duration-300 ease-in-out flex items-center justify-center gap-2 mt-4"
+        className="px-4 py-2 bg-white text-black rounded-md hover:bg-opacity-80 transition-all duration-300 ease-in-out flex items-center justify-center gap-2 mt-4"
         onClick={() => {
           signIn("google");
         }}

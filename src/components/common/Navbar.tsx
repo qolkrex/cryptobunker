@@ -53,14 +53,14 @@ export const Navbar = () => {
                   "https://res.cloudinary.com/giandiaz/image/upload/v1710799117/c8fun2tj1hphk2sx0uuc.png";
               }}
             /> */}
-            <h1 className="text-white text-3xl">DGSOL</h1>
+            <h1 className="text-white text-3xl">CryptoBunker</h1>
             {/* <Image
-                            src={'/img/logo.png'}
-                            alt="logo"
-                            width={100}
-                            height={100}
-                            className='object-contain h-8 w-40'
-                        /> */}
+              src={"/img/logo.webp"}
+              alt="logo"
+              width={100}
+              height={100}
+              className="object-contain h-8 w-44"
+            /> */}
           </Link>
           <button
             onClick={() => setOpen(!open)}
@@ -113,7 +113,7 @@ export const Navbar = () => {
                 <li>
                   <Link
                     href="/login"
-                    className="flex items-center justify-center bg-primary py-4 px-10 rounded-md w-[179px]"
+                    className="flex items-center justify-center bg-primary py-4 px-10 rounded-md w-[179px] text-white"
                   >
                     Únete
                   </Link>

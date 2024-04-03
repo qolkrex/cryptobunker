@@ -64,6 +64,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
     token1: "",
   });
   console.log(walletCoins);
+  console.log(CoinContext);
   const router = useRouter();
 
   const [amountToSwap, setAmountToSwap] = useState<string>("");
@@ -297,8 +298,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
         <div className="flex flex-col gap-4 justify-start items-start md:flex-row md:items-center md:justify-between mb-7">
           <span className="text-white text-2xl font-bold">Comprar</span>
           <div className="flex flex-col bg-[#333333] px-6 py-2 rounded-xl">
-            <span>Precio GMK: {GMKPrice && GMKPrice.toFixed(2)} USD</span>
-            <span>Restante: {gmkRemaining} GMK</span>
+            <span>Precio DGSOL: {GMKPrice && GMKPrice.toFixed(2)} USD</span>
           </div>
         </div>
 
@@ -361,7 +361,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
             onClick={() => {
               router.push("/dashboard/settings/kyc");
             }}
-            className="flex flex-col pt-10 pb-5 px-10 mb-8 mt-14 mx-auto w-11/12 md:max-w-[300px] bg-[#F7A813] rounded-3xl text-black relative"
+            className="flex flex-col pt-10 pb-5 px-10 mb-8 mt-14 mx-auto w-11/12 md:max-w-[300px] bg-primary rounded-3xl text-white relative"
           >
             <img
               src="/img/icons/notificate.svg"
@@ -393,7 +393,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
             )
           ) : (
             <Button
-              className="py-4 px-10 rounded-xl bg-primary p-2 text-white text-center flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="py-4 px-10 rounded-xl bg-primary ring-1 ring-blue-700 hover:bg-primaryHover hover:ring-transparent p-2 text-white text-center flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handleSwap}
               loading={loadingSwap}
               disabled={!hasBalance}
@@ -425,7 +425,8 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                   <>
                     {coinsContext[0]?.name}
                     {">"}
-                    {coinsContext[1]?.name}
+                    {/* {coinsContext[1]?.name} */}
+                    DGSOL
                   </>
                 ) : (
                   <>
@@ -433,7 +434,8 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                     {">"}
                     {"USDT"}
                     {">"}
-                    {coinsContext[1]?.name}
+                    {/* {coinsContext[1]?.name} */}
+                    DGSOL
                   </>
                 )}
               </p>

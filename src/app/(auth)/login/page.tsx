@@ -19,7 +19,7 @@ export default async function LoginPage() {
     }
 
     return (
-        <div className="flex min-h-[850px] flex-col justify-center items-center bg-hero bg-cover bg-no-repeat bg-center 
+        <div className="flex min-h-[850px] flex-col justify-center items-center bg-hero bg-cover bg-no-repeat bg-top 
         z-10
         relative
         overflow-hidden before:content-['']

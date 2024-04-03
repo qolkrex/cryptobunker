@@ -26,7 +26,7 @@ const ButtonTop: React.FC = () => {
 
   return (
     <button
-      className={`fixed bottom-4 right-4 p-5 bg-primary text-white rounded-full shadow-md rotate-180 hover:bg-warning z-30 ${
+      className={`fixed bottom-4 right-4 p-5 bg-[#191970] text-white rounded-full shadow-md rotate-180 hover:bg-primaryHover z-30 ${
         isVisible ? "block" : "hidden"
       } transition duration-500 transform hover:scale-110`}
       onClick={scrollToTop}

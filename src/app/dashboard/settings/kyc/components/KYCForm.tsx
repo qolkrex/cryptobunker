@@ -86,7 +86,7 @@ const KYCForm = () => {
       const img1 = await uploadImage(image1URL);
       const img2 = await uploadImage(image2URL);
       if (img1 && img2) {
-        console.log("entro")
+        console.log("entro");
         const kyc = await createKyc({
           userId: userSession?.user?.id || "",
           documentType: (data.typeDocument as string).toLowerCase(),
@@ -409,7 +409,7 @@ const KYCForm = () => {
                       />
                       <label
                         htmlFor={type.value}
-                        className="flex flex-row items-center gap-4 w-full peer-checked:bg-yellow-500 py-2 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100 px-3 rounded-lg transition-colors"
+                        className="flex flex-row items-center gap-4 w-full peer-checked:bg-primary/90 py-2 peer-checked:text-white hover:text-gray-600 hover:bg-gray-100 px-3 rounded-lg transition-colors"
                       >
                         <img
                           src={type.image}
@@ -509,7 +509,7 @@ const KYCForm = () => {
                           />
                         ) : (
                           <>
-                            <label className="text-black flex justify-center w-full max-w-40 gap-3 rounded-2xl bg-primary py-3 px-3">
+                            <label className="text-white flex justify-center w-full max-w-40 gap-3 rounded-2xl bg-primary py-3 px-3">
                               <input
                                 type="file"
                                 className="hidden"
@@ -574,7 +574,7 @@ const KYCForm = () => {
                           />
                         ) : (
                           <>
-                            <label className="text-black flex justify-center w-full max-w-40 gap-3 rounded-2xl bg-primary py-3 px-3">
+                            <label className="text-white flex justify-center w-full max-w-40 gap-3 rounded-2xl bg-primary py-3 px-3">
                               <input
                                 type="file"
                                 className="hidden"
@@ -663,7 +663,7 @@ const KYCForm = () => {
             )}
           </>
           {step < 6 && (
-            <div className="flex flex-col pt-10 pb-5 px-10 mb-8 mt-14 mx-auto w-11/12 md:max-w-[780px] bg-[#F7A813] rounded-3xl text-black relative">
+            <div className="flex flex-col pt-10 pb-5 px-10 mb-8 mt-14 mx-auto w-11/12 md:max-w-[780px] bg-white/65 rounded-3xl text-black relative">
               <img
                 src="/img/icons/notificate.svg"
                 className="w-[70px] absolute left-[35px] -top-[35px]"
@@ -710,7 +710,7 @@ const KYCForm = () => {
                 {step < 5 && (
                   <button
                     type={"button"}
-                    className="bg-[#F7A813] text-black rounded-3xl font-bold py-2 px-12 disabled:bg-yellow-600"
+                    className="bg-primary text-white rounded-3xl font-bold py-2 px-12 disabled:bg-gray-500"
                     disabled={validForm()}
                     onClick={() => {
                       if (step === 5 && !image1URL && !image2URL) {
@@ -738,7 +738,7 @@ const KYCForm = () => {
               {step === 5 && (
                 <Button
                   type="submit"
-                  className="bg-[#F7A813] text-black rounded-3xl font-bold py-2 px-12 disabled:bg-yellow-600"
+                  className="bg-primary text-white rounded-3xl font-bold py-2 px-12 disabled:bg-gray-500"
                   disabled={!image1URL || !image2URL}
                   loading={loadinForm}
                 >

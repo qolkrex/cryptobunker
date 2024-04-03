@@ -272,7 +272,7 @@ export const ButtonNavbarConnect: FC<Props> = ({ openModal, setOpenModal }) => {
               onClick={async (event) => {
                 menuLeft.current.toggle(event);
               }}
-              className="rounded-full bg-white flex items-center gap-2 px-3 py-0 text-black hover:text-white"
+              className="rounded-full bg-white flex items-center gap-2 px-3 py-0 text-black hover:text-white hover:bg-primary hover:ring-blue-500"
             >
               <span className="ml-2">
                 {data?.user?.address ? `${data.user.address.substring(0, 10)}...` : "Connect Wallet"}

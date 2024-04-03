@@ -24,21 +24,22 @@ export const coins = {
     selected: "GMK",
   },
   GMK: {
-    id: "GMK",
-    icon: "/img/crypto/G_TOKEN.png",
+    id: "DGSOL",
+    icon: "/img/crypto/dgsol-token-2.webp",
     description: "GMK",
     filter: ["USDT", "BUSD", "BNB", "CAKE"],
     balance: 0,
     selected: "USDT",
   },
-  OPTIMISM: {
-    id: "OPTIMISM",
-    icon: "https://cryptologos.cc/logos/optimism-ethereum-op-logo.png",
-    description: "Optimism",
-    filter: ["USDT", "BUSD", "BNB", "CAKE"],
-    balance: 0,
-    selected: "GMK",
-  },
+  //TODO: Add more coins or tokens 
+  // OPTIMISM: {
+  //   id: "OPTIMISM",
+  //   icon: "https://cryptologos.cc/logos/optimism-ethereum-op-logo.png",
+  //   description: "Optimism",
+  //   filter: ["USDT", "BUSD", "BNB", "CAKE"],
+  //   balance: 0,
+  //   selected: "GMK",
+  // },
 };
 
 export const GMKNFTADDRESS = "0xDE969782be2BdEc6CC35A6cb7334b174007efD6E";

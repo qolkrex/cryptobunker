@@ -88,12 +88,12 @@ export const Footer = () => {
                 </Link>
               </div>
             </div>
-            <div className="flex flex-col items-center text-center md:items-start md:flex-row md:gap-20   gap-8  ">
+            <div className="flex flex-col items-center text-center md:items-start md:flex-row md:gap-20   gap-8 text-white ">
               <div>
                 <h2 className="mb-6 text-sm md:font-bold md:text-xl font-semibold text-gray-900 uppercase dark:text-white">
                   Recursos
                 </h2>
-                <ul className="text-black flex flex-col gap-3">
+                <ul className="text-white flex flex-col gap-3">
                   {/* <li className="">
                                         <Link href="/#about" className="hover:underline">Acerca de</Link>
                                     </li> */}
@@ -110,13 +110,13 @@ export const Footer = () => {
                 </ul>
               </div>
               <div>
-                <h2 className="mb-6 text-sm md:font-bold md:text-xl font-semibold text-gray-900 uppercase dark:text-white">
+                <h2 className="mb-6 text-sm md:font-bold md:text-xl font-semibold text-white uppercase dark:text-white">
                   Correo
                 </h2>
-                <ul className="text-black">
+                <ul className="text-white">
                   <li className="mb-4">
                     <Link href="/" className="hover:underline ">
-                      contacto@dgsol.com
+                      contacto@cryptobunker.com
                     </Link>
                   </li>
                 </ul>
@@ -126,7 +126,7 @@ export const Footer = () => {
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div className="sm:flex sm:items-center sm:justify-between">
             <span className="text-sm text-white sm:text-center ">
-              © 2024 DGSOL. All Rights Reserved.
+              © 2024 CryptoBunker. All Rights Reserved.
             </span>
             <div className="flex mt-4 sm:justify-center sm:mt-0">
               <span className="text-sm text-white sm:text-center ">
@@ -142,7 +142,7 @@ export const Footer = () => {
           </div>
         </div>
       </footer>
-      <ButtonTop />
+      {/* <ButtonTop /> */}
     </div>
   );
 };

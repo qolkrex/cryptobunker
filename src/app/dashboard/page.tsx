@@ -35,9 +35,9 @@ export default async function AdminPage() {
   const cryptos: ICrypto[] = [
     {
       id: 1,
-      name: "GMK",
-      token: "goldmak",
-      image: "/img/crypto/G_TOKEN.png",
+      name: "DGSOL",
+      token: "DIGISOL",
+      image: "/img/crypto/dgsol-token-2.webp",
 
       price: "$00.00",
       balance: "$0.00",
@@ -64,9 +64,9 @@ export default async function AdminPage() {
     },
     {
       id: 4,
-      name: "OP",
-      token: "Optimist",
-      image: "/img/crypto/OPTIMIST.png",
+      name: "BNB",
+      token: "BNB",
+      image: "/img/crypto/BNB.png",
       price: "$00.00",
       balance: "$0.00",
       balanceInUsd: "$0.00",

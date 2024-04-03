@@ -23,7 +23,8 @@ const config: Config = {
         hero: "url('/img/bg/bg-main.webp')",
       },
       backgroundColor: {
-        primary: "#f7a813",
+        primary: "#0047AB",
+        primaryHover: "#001F3F",
         secondary: "#e5e7eb",
         danger: "#dc2626",
         success: "#10b981",
