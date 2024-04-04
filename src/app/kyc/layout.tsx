@@ -7,8 +7,8 @@ import { HomeLayout } from '@/components/layouts/HomeLayout'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Goldmak',
-  description: 'Goldmak es una token ERC-20 que se encuentra en la red Ethereum.',
+  title: 'CryptoBunker',
+  description: 'CryptoBunker es un sitio web que te permite comprar y vender criptomonedas.',
 }
 
 export default function MainLayout({
@@ -22,7 +22,7 @@ export default function MainLayout({
         <link
           rel="icon"
           type="image/ico"
-          href='img/g-token.ico'
+          href='img/dgsol2-logo.ico'
         />
       </head>
       <body className={inter.className}>
