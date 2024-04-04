@@ -23,7 +23,7 @@ export const Footer = () => {
               </Link>
               <div className="flex gap-10 py-3 justify-evenly md:justify-normal">
                 <Link
-                  href="https://www.tiktok.com/@goldmakoficial"
+                  href="https://www.tiktok.com/"
                   target="_blank"
                   className="flex items-center"
                 >
@@ -41,7 +41,7 @@ export const Footer = () => {
                   />
                 </Link>
                 <Link
-                  href="https://www.instagram.com/goldmak.oficial/"
+                  href="https://www.instagram.com/"
                   target="_blank"
                   className="flex items-center"
                 >
@@ -53,7 +53,7 @@ export const Footer = () => {
                   />
                 </Link>
                 <Link
-                  href="https://www.youtube.com/channel/UCnb2wGx6aRrLq8lneCIUVZg"
+                  href="https://www.youtube.com/"
                   target="_blank"
                   className="flex items-center text-white "
                 >
@@ -75,7 +75,7 @@ export const Footer = () => {
                   </svg>
                 </Link>
                 <Link
-                  href="https://twitter.com/goldmakoficial"
+                  href="https://twitter.com/"
                   target="_blank"
                   className="flex items-center"
                 >

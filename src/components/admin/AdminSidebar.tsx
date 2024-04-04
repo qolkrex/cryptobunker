@@ -183,23 +183,31 @@ export const AdminSidebar = () => {
         } transition-all min-h-[90vh] z-30`}
       >
         <div
-          className={`overflow-hidden flex flex-col bg-white max-w-64 min-h-[80vh] h-[90vh] py-10 overflow-y-auto w-full ${
+          className={`overflow-hidden flex flex-col bg-white max-w-64 min-h-[80vh] h-[90vh] py-10 pt-3 overflow-y-auto w-full ${
             sideBarOpen
-              ? "translate-x-0 w-auto px-5 pr-10 min-w-32"
+              ? "translate-x-0 w-auto px-5 pr-5 min-w-32"
               : "-translate-x-full w-0 px-0 pr-0"
           } transition-all duration-300 ease-in-out top-0 z-50 shadow-md fixed`}
         >
           {/* <Sidebar visible={visible} onHide={() => setVisible(false)}> */}
-          <div className="w-full flex text-2xl font-bold tracking-wide">
-            <Link href="/dashboard">
-              CryptoBunker
-              {/* <Image
-                src="/img/logo.webp"
+          <div className="w-full flex text-2xl font-bold tracking-wide font-monserrat">
+            <Link href="/dashboard" className="flex flex-col items-center mb-5 gap-2">
+              {/* CryptoBunker */}
+
+              <Image
+                src="/img/cb-logo.webp"
+                alt="1"
+                width={100}
+                height={100}
+                className="w-full h-full object-cover z-10 max-w-[70px]"
+              />
+              <Image
+                src="/img/cryptobunker.webp"
                 alt="1"
                 width={350}
-                height={112}
+                height={150}
                 className="w-full h-full object-cover z-10"
-              /> */}
+              />
             </Link>
           </div>
           <div className="flex flex-col py-2 my-2 h-full ">

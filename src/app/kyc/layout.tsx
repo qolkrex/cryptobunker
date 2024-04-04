@@ -22,7 +22,7 @@ export default function MainLayout({
         <link
           rel="icon"
           type="image/ico"
-          href='img/dgsol2-logo.ico'
+          href='img/logo.ico'
         />
       </head>
       <body className={inter.className}>

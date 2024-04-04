@@ -83,7 +83,7 @@ export const AdminNavbar = () => {
                   toggleSideBar(!sideBarOpen)
                 }
               >
-                {sideBarOpen || session?.user?.verified === "approved" ? (
+                {sideBarOpen && session?.user?.verified === "approved" ? (
                   <svg
                     className="size-5 text-white"
                     width="24"
@@ -128,15 +128,14 @@ export const AdminNavbar = () => {
                 )}
               </Button>
 
-              <Link href="/" className="text-white text-2xl font-bold ">
-                CryptoBunker
-                {/* <Image
-                  src="/img/logo.webp"
+              <Link href="/" className="text-white text-2xl font-bold font-monserrat">
+                <Image
+                  src="/img/cryptobunker.webp"
                   alt="1"
-                  width={100}
-                  height={100}
-                  className="w-full h-full object-cover z-10 hidden md:block"
-                /> */}
+                  width={130}
+                  height={150}
+                  className="w-full h-full object-cover z-10 hidden md:block max-w-[255px] max-h-[150px]"
+                />
               </Link>
             </div>
           </div>

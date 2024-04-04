@@ -73,6 +73,21 @@ body {
   animation: fadeLeft 0.5s ease-in-out;
 }
 
+@font-face {
+  font-family: Monserrat-Regular;
+  src: url("../../public/fonts/MontserratAlt1-Regular.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: Monserrat-Bold;
+  src: url("../../public/fonts/MontserratAlt1-Bold.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: Monserrat-SemiBold;
+  src: url("../../public/fonts/MontserratAlt1-SemiBold.ttf") format("opentype");
+}
+
 @keyframes fadeLeft {
   0% {
     transform: translateX(-100%);

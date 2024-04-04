@@ -80,6 +80,7 @@ const config: Config = {
         title2: ["SoccerLeageItalic", "sans-serif"],
         paragraph: [" MyriadPro-Regula", "sans-serif"],
         titleVariant: [" Myriad-Variable-Concept", "sans-serif"],
+        monserrat: ["Montserrat", "sans-serif"],
       },
       maxWidth: {
         "8xl": "90rem",
