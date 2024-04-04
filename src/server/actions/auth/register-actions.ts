@@ -211,7 +211,7 @@ export const registerUser = async ({
       email: userCreated.email!,
       name: userCreated.name ?? "",
       expires: "30 días",
-      link: `${"https://goldmak.io"}/confirmar-cuenta?token=${token}`,
+      link: `${"https://cryptobunker.vercel.app/"}/confirmar-cuenta?token=${token}`,
       password: gPass,
     });
 
@@ -300,7 +300,7 @@ export const signInEmailAndMessage = async (
     email: userUpdated.email!,
     name: userUpdated.name ?? "",
     expires: "30 días",
-    link: `${"https://goldmak.io"}/confirmar-cuenta?token=${token}`,
+    link: `${"https://cryptobunker.vercel.app/"}/confirmar-cuenta?token=${token}`,
     password: gPass,
   });
 
