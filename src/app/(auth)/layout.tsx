@@ -32,7 +32,7 @@ export default async function MainLayout({
         <link
           rel="icon"
           type="image/ico"
-          href='img/g-token.ico'
+          href='img/dgsol2-logo.ico'
         />
       </head>
       <body className={inter.className}>

@@ -42,7 +42,7 @@ export default function PageSendAndRecive() {
     GMK: {
       balance: 0,
       symbol: "DGSOL",
-      image: "/img/crypto/dgsol-token-2.webp",
+      image: "/img/crypto/dgsol-token-2-white.webp",
       address: TOKENS.GMK.address,
     },
   });
@@ -327,7 +327,7 @@ export default function PageSendAndRecive() {
                     <div className="flex justify-between items-center px-4 w-full hover:bg-gray-500 py-5 cursor-pointer">
                       <div className="flex items-center gap-2">
                         <img
-                          src="/img/crypto/dgsol-token-2.webp"
+                          src="/img/crypto/dgsol-token-2-white.webp"
                           alt=""
                           className="w-8 h-8 rounded-full"
                         />

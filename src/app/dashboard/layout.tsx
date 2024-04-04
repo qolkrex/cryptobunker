@@ -12,7 +12,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
     title: "Dashboard",
     description: "Dashboard",
-    icons: "/img/g-token.ico"
+    icons: "/img/dgsol2-logo.ico"
 }
 
 export default async function DashboardLayout({

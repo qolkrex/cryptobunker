@@ -25,7 +25,7 @@ export const coins = {
   },
   GMK: {
     id: "DGSOL",
-    icon: "/img/crypto/dgsol-token-2.webp",
+    icon: "/img/crypto/dgsol-token-2-white.webp",
     description: "GMK",
     filter: ["USDT", "BUSD", "BNB", "CAKE"],
     balance: 0,

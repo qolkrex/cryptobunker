@@ -34,7 +34,7 @@ export const AdminSidebar = () => {
 
   const items: Items[] = [
     {
-      label: "Inicio",
+      label: "Billetera",
       icon: "pi pi-home",
       href: "/dashboard",
       role: ["admin", "user"],
@@ -102,57 +102,59 @@ export const AdminSidebar = () => {
       ],
     },
     {
-      title: "Wallet",
+      label: "Intercambio",
+      icon: "pi pi-sync",
+      href: "/dashboard/swap",
       role: ["user", "admin", "userWhitelist", "validator"],
-      icon: "pi pi-wallet",
-      children: [
-        {
-          label: "Swap",
-          icon: "pi pi-sync",
-          href: "/dashboard/swap",
-          role: ["user", "admin", "userWhitelist", "validator"],
-        },
-        {
-          label: "Enviar y Recibir",
-          icon: "pi pi-send",
-          href: "/dashboard/swap/send-and-recive",
-          role: ["admin", "userWhitelist", "validator"],
-        },
-        {
-          label: "Stake",
-          icon: "pi pi-chart-bar",
-          href: "/dashboard/swap/stake",
-          role: ["user", "admin", "userWhitelist", "validator"],
-        },
-        {
-          label: "Nfts",
-          // icon: "pi pi-sync",
-          IconComponent: (
-            <Image
-              src="/img/icons/nft-icon.png"
-              alt="1"
-              width={20}
-              height={20}
-              className="w-5 h-5 object-contain z-10"
-            />
-          ),
-          href: "/dashboard/swap/nfts",
-          role: ["user", "admin", "userWhitelist", "validator"],
-        },
-      ],
     },
-    // {
-    //     label: "Wallet",
-    //     icon: "pi pi-wallet",
-    //     href: "/dashboard/tokens",
-    //     role: ['admin', 'user']
-    // },
+    {
+      label: "Enviar y Recibir",
+      icon: "pi pi-send",
+      href: "/dashboard/swap/send-and-recive",
+      role: ["admin", "userWhitelist", "validator"],
+    },
+    {
+      label: "Stake",
+      icon: "pi pi-chart-bar",
+      href: "/dashboard/swap/stake",
+      role: ["user", "admin", "userWhitelist", "validator"],
+    },
+    {
+      label: "Nfts",
+      // icon: "pi pi-sync",
+      IconComponent: (
+        <Image
+          src="/img/icons/nft-icon.png"
+          alt="1"
+          width={20}
+          height={20}
+          className="w-5 h-5 object-contain z-10"
+        />
+      ),
+      href: "/dashboard/swap/nfts",
+      role: ["user", "admin", "userWhitelist", "validator"],
+    },
     {
       label: "Historial",
       icon: "pi pi-history",
       href: "/dashboard/history",
       role: ["admin", "validator", "userWhitelist"],
     },
+    // {
+    //   title: "Wallet",
+    //   role: ["user", "admin", "userWhitelist", "validator"],
+    //   icon: "pi pi-wallet",
+    //   children: [
+        
+    //   ],
+    // },
+    // {
+    //     label: "Wallet",
+    //     icon: "pi pi-wallet",
+    //     href: "/dashboard/tokens",
+    //     role: ['admin', 'user']
+    // },
+    
     // {
     //     label: "Salir",
     //     icon: "pi pi-sign-out",

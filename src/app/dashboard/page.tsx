@@ -37,7 +37,7 @@ export default async function AdminPage() {
       id: 1,
       name: "DGSOL",
       token: "DIGISOL",
-      image: "/img/crypto/dgsol-token-2.webp",
+      image: "/img/crypto/dgsol-token-2-white.webp",
 
       price: "$00.00",
       balance: "$0.00",
