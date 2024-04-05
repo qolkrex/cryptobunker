@@ -12,6 +12,7 @@ import {
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { CryptoTableItem } from "./CryptoTableItem";
+import { Dialog } from "primereact/dialog";
 
 interface CryptoTableProps {
   cryptos?: ICrypto[];
@@ -26,6 +27,7 @@ export const CryptoTable: FC<CryptoTableProps> = ({
   const { setTotalValueInUSD } = useWallet();
   const [gmkCurrentPrice, setGmkCurrentPrice] = useState(0);
   const { data: userSession } = useSession();
+  const [addTokenModal, setAddTokenModal] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -102,8 +104,83 @@ export const CryptoTable: FC<CryptoTableProps> = ({
 
   return (
     <div className="relative overflow-x-auto max-w-5xl lg:max-w-6xl bg-[#414141] md:px-10 py-2 rounded-2xl">
-      <div className="bg-[#414141] py-4 px-6 rounded-t-xl hidden md:flex">
+      <div className="bg-[#414141] py-4 px-6 rounded-t-xl hidden md:flex justify-end">
         <div className="border rounded-full w-auto flex">
+          <button
+            className="flex justify-center items-center gap-2 focus:bg-primary focus:text-white py-3 px-4 w-auto rounded-full"
+            onClick={() => setAddTokenModal(true)}
+          >
+            <i className="pi pi-plus-circle"></i>
+            Agregar Token
+          </button>
+        </div>
+        <Dialog
+          header="Agregar Token"
+          visible={addTokenModal}
+          style={{ width: "50vw" }}
+          onHide={() => setAddTokenModal(false)}
+          headerClassName="bg-[#414141] text-white"
+          contentClassName="bg-[#414141] text-white"
+          resizable={false}
+          draggable={false}
+        >
+          <div className="flex flex-col gap-4">
+            
+            <div className="flex flex-col gap-2">
+              <label htmlFor="tokenContract">Contrato del Token</label>
+              <input
+                type="text"
+                id="tokenContract"
+                className="bg-[#414141] border border-gray-500 rounded-lg p-2"
+              />
+            </div>
+
+            {/* divisor */}
+            <div className="border-b border-gray-500"></div>
+
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="tokenName">Nombre del Token</label>
+              <input
+                type="text"
+                id="tokenName"
+                className="bg-[#414141] border border-gray-500 rounded-lg p-2"
+                readOnly
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="tokenSymbol">Símbolo del Token</label>
+              <input
+                type="text"
+                id="tokenSymbol"
+                className="bg-[#414141] border border-gray-500 rounded-lg p-2"
+                readOnly
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="tokenDecimals">Decimales del Token</label>
+              <input
+                type="number"
+                id="tokenDecimals"
+                className="bg-[#414141] border border-gray-500 rounded-lg p-2"
+                readOnly
+              />
+            </div>
+            
+            <div className="flex justify-end gap-4">
+              <button
+                className="bg-danger text-white rounded-lg py-2 px-4"
+                onClick={() => setAddTokenModal(false)}
+              >
+                Cancelar
+              </button>
+              <button className="bg-primary text-white rounded-lg py-2 px-4" onClick={() => setAddTokenModal(false)}>
+                Guardar
+              </button>
+            </div>
+          </div>
+        </Dialog>
+        {/* <div className="border rounded-full w-auto flex">
           <button className="flex justify-center items-center gap-2 focus:bg-yellow-400 focus:text-black py-3 px-2 w-32 rounded-full">
             Token
           </button>
@@ -129,7 +206,7 @@ export const CryptoTable: FC<CryptoTableProps> = ({
           >
             Transacciones
           </button>
-        </div>
+        </div> */}
       </div>
       <ul className="bg-[#414141] hidden">
         <li className="px-6 py-3 text-sm">

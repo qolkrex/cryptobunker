@@ -17,9 +17,9 @@ export default async function SecurityPage() {
       }`}
     >
       <img
-        src="/img/maquina_derecha.png"
+        src="/img/cascos/casco_s_2.png"
         alt="Maquinaria KYC"
-        className="w-96 aspect-video -top-[166px] mx-auto absolute"
+        className="w-96 h-auto -top-[190px] mx-auto absolute"
       />
       <KYCFormSecurity />
     </div>

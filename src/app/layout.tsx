@@ -8,8 +8,8 @@ import { LayoutProviders } from '@/components/layouts/LayoutProviders'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Goldmak',
-  description: 'Goldmak es una token ERC-20 que se encuentra en la red Ethereum.',
+  title: 'CryptoBunker',
+  description: 'CryptoBunker is a platform for Swapping cryptocurrencies',
 }
 
 export default function MainLayout({

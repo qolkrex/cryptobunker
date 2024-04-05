@@ -381,7 +381,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                 loading={loadingSwap}
                 disabled={!hasBalance}
               >
-                {!hasBalance ? <p>{messageBalance}</p> : <p>Comprar</p>}
+                {!hasBalance ? <p>{messageBalance}</p> : <p>Swap</p>}
               </Button>
             ) : (
               <button
@@ -398,7 +398,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
               loading={loadingSwap}
               disabled={!hasBalance}
             >
-              {!hasBalance ? <p>{messageBalance}</p> : <p>Comprar</p>}
+              {!hasBalance ? <p>{messageBalance}</p> : <p>Swap</p>}
             </Button>
           )
         ) : (
@@ -465,7 +465,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
             </p>
             <div className="bg-[#333333] p-4 rounded-xl">
               <div className="flex items-start justify-between gap-2">
-                <p>Comprar</p>
+                <p>Swap</p>
                 <p>
                   {amountToSwap} {coinValue.id}
                 </p>

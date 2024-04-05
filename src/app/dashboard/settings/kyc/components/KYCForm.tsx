@@ -239,7 +239,7 @@ const KYCForm = () => {
       {/* <h1 className="pl-3 md:pl-10 text-2xl font-semibold">
         Configuración Kyc
       </h1> */}
-      <div className={`flex flex-col gap-10 ${step === 0 ? "pt-24" : "pt-2"}`}>
+      <div className={`flex flex-col gap-10 ${step === 0 ? "pt-28" : "pt-2"}`}>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className={`flex flex-col items-center bg-[#D0CECD]  rounded-xl p-4 py-10 w-11/12 md:max-w-[780px] mx-auto mt-3 relative ${
@@ -248,9 +248,9 @@ const KYCForm = () => {
         >
           {step === 0 && (
             <img
-              src="/img/maquina_derecha.png"
+              src="/img/cascos/casco_s_1.png"
               alt="Maquinaria KYC"
-              className="w-96 aspect-video -top-[166px] mx-auto absolute"
+              className="w-96 h-auto -top-[190px] mx-auto absolute"
             />
           )}
           <>
