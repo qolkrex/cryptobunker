@@ -120,6 +120,12 @@ export const AdminSidebar = () => {
       role: ["user", "admin", "userWhitelist", "validator"],
     },
     {
+      label: "Deposito Y Retiro",
+      icon: "pi pi-money-bill",
+      href: "/dashboard/deposit-withdraw",
+      role: ["user", "admin", "userWhitelist", "validator"],
+    },
+    {
       label: "Nfts",
       // icon: "pi pi-sync",
       IconComponent: (
@@ -190,7 +196,7 @@ export const AdminSidebar = () => {
           } transition-all duration-300 ease-in-out top-0 z-50 shadow-md fixed`}
         >
           {/* <Sidebar visible={visible} onHide={() => setVisible(false)}> */}
-          <div className="w-full flex text-2xl font-bold tracking-wide font-monserrat">
+          <div className="w-full flex text-2xl font-bold tracking-wide font-monserrat justify-center mt-3">
             <Link href="/dashboard" className="flex flex-col items-center mb-5 gap-2">
               {/* CryptoBunker */}
 
@@ -201,16 +207,16 @@ export const AdminSidebar = () => {
                 height={100}
                 className="w-full h-full object-cover z-10 max-w-[70px]"
               />
-              <Image
+              {/* <Image
                 src="/img/cryptobunker.webp"
                 alt="1"
                 width={350}
                 height={150}
                 className="w-full h-full object-cover z-10"
-              />
+              /> */}
             </Link>
           </div>
-          <div className="flex flex-col py-2 my-2 h-full ">
+          <div className="flex flex-col py-2 mb-2 h-full ">
             {sideBarOpen && (
               <>
                 <SidebarList items={items} />

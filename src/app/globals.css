@@ -146,3 +146,14 @@ input[type="number"] {
   color: white;
   background: #414141;
 }
+
+
+.p-tabview-nav {
+  background: #414141;
+  color: white;
+}
+
+.p-tabview-nav-link {
+  color: white;
+  background-color: #414141;
+}
