@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { TypeOptions, toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { transferUSDTToAddress } from "../../rounds/Web3Client";
+import { Tooltip } from "primereact/tooltip";
 
 export default function PageSendAndRecive() {
   const [show, setShow] = useState(true);
@@ -59,6 +60,12 @@ export default function PageSendAndRecive() {
       position: "bottom-right",
     });
   };
+
+  const commission = amountToSend * 0.000009;
+  const totalToPay: number = amountToSend + commission;
+
+  console.log("totalToPay", totalToPay);
+  console.log("commission", commission);
 
   // TODO: No enviar NFT a esta direccion
   /*
@@ -135,13 +142,9 @@ export default function PageSendAndRecive() {
             3500
           );
         }
-        if(passwordSecret === "") {
+        if (passwordSecret === "") {
           setLoading(false);
-          return message(
-            "error",
-            "La contraseña no puede estar vacia",
-            3500
-          );
+          return message("error", "La contraseña no puede estar vacia", 3500);
         }
         setShowDialog(true);
       }
@@ -371,6 +374,39 @@ export default function PageSendAndRecive() {
                   Max
                 </span>
               </label>
+            </div>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between gap-2">
+                <p>Enviar</p>
+                <p>
+                  {amountToSend} {activeCoin}
+                </p>
+              </div>
+              {/* COMISION TAX 0.0009% (FCS) */}
+              <div className="flex items-center justify-between gap-2">
+                <Tooltip target="#fcs-text" position="top" className="max-w-[400px]">
+                  <p className="text-sm">
+                    Es un pequeño porcentaje aplicado a cada transacción en la
+                    plataforma CryptoBunker. <br/> Este fee se destina al staking,
+                    donde los usuarios pueden bloquear sus activos para ayudar a
+                    asegurar la red y ganar recompensas.
+                  </p>
+                </Tooltip>
+                <p id="fcs-text">
+                  Comisión -{" "}
+                  <span className="font-bold text-sm">0.0009% (FCS) (?)</span>
+                </p>
+                <p>
+                  {commission.toFixed(3) || 0} {activeCoin}
+                </p>
+              </div>
+              <div className="flex items-center justify-between gap-2">
+                <p>Total a pagar</p>
+                <p>
+                  {(Number(amountToSend) + Number(commission)).toFixed(4)}{" "}
+                  {activeCoin}
+                </p>
+              </div>
             </div>
             <Button
               type="submit"
