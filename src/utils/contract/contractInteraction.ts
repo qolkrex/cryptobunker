@@ -3,7 +3,7 @@ import Web3 from "web3";
 import USDT_ABI from "./abi/usdtABI.json";
 import GMKNFTABI from "./abi/gmkNFTABI.json";
 import ERC20ABI from "@/config/abi/erc20.json";
-import { GMKNFTADDRESS } from "@/data/coinsData";
+import { DGSOLCONTRACT, GMKNFTADDRESS } from "@/data/coinsData";
 import { IRound } from "@/app/dashboard/rounds/Web3Client";
 
 const web3 = new Web3(
@@ -47,13 +47,10 @@ export const getGMKBalanceFromAddress = async (address: string) => {
   if (address === "") return 0;
   if (address === "0x0") return 0;
   try {
-    const gmkContract = new web3.eth.Contract(
-      USDT_ABI,
-      TOKENS.GMK.address
-    ) as any;
+    const gmkContract = new web3.eth.Contract(USDT_ABI, DGSOLCONTRACT) as any;
     const gmkBalance = await gmkContract.methods.balanceOf(address).call();
     // wei to usdt
-    return Number(gmkBalance) / 1e8;
+    return Number(gmkBalance) / 1e18;
   } catch (error: any) {
     console.log(error);
     throw new Error(`Error al obtener el balance: ${error?.message}`);

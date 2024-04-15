@@ -3,7 +3,7 @@ import { CustomTableDepositAndWithdraw } from "./components/Table";
 
 const DepositWithdraw = () => {
   return (
-    <div className="px-4 max-w-[760px] mx-auto">
+    <div className="px-4 max-w-[760px] mx-auto mb-20">
       <div className="flex flex-col gap-2">
         <h1 className="text-lg font-monserrat font-bold">
           Depositar & Retirar

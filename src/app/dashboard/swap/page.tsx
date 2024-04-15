@@ -15,8 +15,8 @@ export default function PageSwap() {
   const { data } = useSession();
 
   return (
-    <div className="px-12 py-14 flex flex-col items-+ justify-center">
-      <div className="flex flex-col bg-[#414141] px-8 py-5 relative rounded-lg">
+    <div className="md:px-12 md:py-14 p-3 pt-10 flex flex-col items-center justify-center md:max-w-[600px] mx-auto">
+      <div className="flex flex-col bg-[#414141] w-full  px-8 mx-auto py-5 relative rounded-lg">
         {data?.user?.isMetamask && (
           <div className="-top-16 right-0 absolute">
             <button

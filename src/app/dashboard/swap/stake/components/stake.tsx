@@ -37,6 +37,8 @@ export const StakeComponent = () => {
             <option value={1}>1 mes</option>
             <option value={3}>3 meses</option>
             <option value={6}>6 meses</option>
+            <option value={8}>8 meses</option>
+            <option value={10}>10 meses</option>
             <option value={12}>12 meses</option>
           </select>
         </div>

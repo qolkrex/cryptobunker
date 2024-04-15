@@ -6,8 +6,9 @@ import ERC20ABI from "@/config/abi/erc20.json";
 import { GMKABI, TOKENS } from "@/config";
 
 import { ethers } from "ethers";
-import { CUSTODYCONTRACT } from "@/data/coinsData";
+import { CUSTODYCONTRACT, DGSOLCONTRACT } from "@/data/coinsData";
 import CUSTODYABI from "@/utils/contract/abi/custodyContractABI.json";
+import dgsolABI from "@/utils/contract/abi/dgsolABI.json";
 import Web3 from "web3";
 import { getUsdtBalance } from "./contractInteraction";
 
@@ -118,7 +119,7 @@ export const buyGMKWithUSDTWithoutWallet = async (
 ) => {
   try {
     await checkAndApproveAllowance(
-      TOKENS.GMK.address,
+      DGSOLCONTRACT,
       TOKENS.USDT.address,
       ethers.utils.parseUnits(amount.toString(), 18),
       _privateKey
@@ -136,18 +137,18 @@ export const buyGMKWithUSDTWithoutWallet = async (
     if (balance * 1e18 < amountInWei) {
       throw new Error("Saldo insuficiente para realizar esta transacción.");
     }
-    const gmkContract = new provider.eth.Contract(
-      GMKABI,
-      TOKENS.GMK.address
+    const dgsolContract = new provider.eth.Contract(
+      dgsolABI,
+      DGSOLCONTRACT
     ) as any;
-    console.log("gmkContract");
-    const data = gmkContract.methods
-      .buyPublicSaleToken(amountInWei)
+    console.log("dgsolContract");
+    const data = dgsolContract.methods
+      .compra(amountInWei)
       .encodeABI();
     console.log("data");
     const tx = {
       from: addressFrom, // Dirección del remitente
-      to: TOKENS.GMK.address, // Dirección del contrato
+      to: DGSOLCONTRACT, // Dirección del contrato
       gasPrice, // Limite de gas
       data, // Método y parámetros codificados ABI
     };
@@ -167,6 +168,58 @@ export const buyGMKWithUSDTWithoutWallet = async (
     throw error;
   }
 };
+
+export const buyDgsolWithBNB = async (
+  amount: number,
+  _privateKey: string,
+  from: string
+) => {
+  try {
+    const provider = new Web3(NODO);
+    const account = provider.eth.accounts.privateKeyToAccount(
+      "0x" + _privateKey
+    );
+    console.log(account);
+    const dgsolContract = new provider.eth.Contract(
+      dgsolABI,
+      DGSOLCONTRACT
+    ) as any;
+    const balance = await provider.eth.getBalance(from);
+    console.log(Number(balance) / 1e18);
+
+    const amountInWei = amount * 1e18;
+    if (balance < amountInWei) {
+      throw new Error(
+        "Su saldo es insuficiente para realizar esta transacción."
+      );
+    }
+    const gasPrice = provider.utils.toWei("10", "gwei");
+    const data = dgsolContract.methods.compraConBNB().encodeABI();
+    const tx = {
+      from: account.address,
+      to: DGSOLCONTRACT,
+      gasPrice,
+      gas: 3000000,
+      value: amountInWei,
+      // gas: provider.utils.toHex(500000),
+      data,
+    };
+    console.log("tx", tx);
+    const signedTx = await provider.eth.accounts.signTransaction(
+      tx,
+      _privateKey
+    );
+    console.log("signedTx", signedTx);
+    const txReceipt = await provider.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+    console.log(txReceipt);
+    return txReceipt;
+  } catch (error) {
+    console.error("Error estimating gas:", error);
+    throw error;
+  }
+}
 
 const checkAndApproveAllowance = async (
   spenderAddress: string,
@@ -324,6 +377,7 @@ export const getPrivateKey = async (_password: string, address: string) => {
     const resp = await custodyContract.methods
       .getPrivateKey(_password, address)
       .call();
+      console.log(resp);
     return resp;
   } catch (error) {
     console.log(error);

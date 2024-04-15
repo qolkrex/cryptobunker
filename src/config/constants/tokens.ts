@@ -41,6 +41,41 @@ export interface ITokensCelo {
   // ALIT:IToken
 }
 
+export interface ITokensBSCTest {
+  [key: string]: IToken;
+}
+
+export const TOKENS_BSC_TEST: ITokensBSCTest = {
+  USDT: {
+    type: "token",
+    address: "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd",
+    symbol: "USDT",
+    decimals: 18,
+    image: "/img/crypto/TETHER.png",
+  },
+  BUSD: {
+    type: "token",
+    address: "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+    symbol: "BUSD",
+    decimals: 18,
+    image: "/img/crypto/USDC.png",
+  },
+  BNB: {
+    type: "crypto",
+    address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    symbol: "BNB",
+    decimals: 18,
+    image: "/img/crypto/BNB.png",
+  },
+  DGSOL: {
+    type: "token",
+    address: "0x081F7911DB0D516F311BB4C6644c833B7A89aB04",
+    symbol: "DGSOL",
+    decimals: 18,
+    image: "/img/crypto/dgsol-token-2-white.webp",
+  },
+};
+
 export const TOKEN_MAINNET = {
   USDT: {
     name: "USDT",
@@ -133,6 +168,23 @@ export const TOKEN_MAINNET = {
       "0x55d398326f99059fF775485246999027B3197955",
     ],
   },
+  // DGSol: {
+  //   name: "DgSOL",
+  //   type: "token",
+  //   address: "0x081F7911DB0D516F311BB4C6644c833B7A89aB04",
+  //   symbol: "DGSOL",
+  //   decimals: 18,
+  //   image:
+  //     "https://media.discordapp.net/attachments/839620709517230081/1199728205565792276/g-token.png?ex=65c398f6&is=65b123f6&hm=cf028d3764e424247ca39235f4939c3d0acab3e678fc361c654a21c394d14b8f&=&format=webp&quality=lossless",
+  //   path: [
+  //     "0xc2086B2CD3Fca4A61ccF5C1cd029dBc64d940bcb",
+  //     "0xc2086B2CD3Fca4A61ccF5C1cd029dBc64d940bcb",
+  //   ],
+  //   pathReverse: [
+  //     "0xc2086B2CD3Fca4A61ccF5C1cd029dBc64d940bcb",
+  //     "0x55d398326f99059fF775485246999027B3197955",
+  //   ],
+  // },
 };
 
 export const TOKEN_TESTNET = {
@@ -334,4 +386,21 @@ export const TOKEN_TESTNET = {
       "0x55d398326f99059fF775485246999027B3197955",
     ],
   },
+  // DGSol: {
+  //   name: "DGSOL",
+  //   type: "token",
+  //   address: "0x081F7911DB0D516F311BB4C6644c833B7A89aB04",
+  //   symbol: "DGSOL",
+  //   decimals: 18,
+  //   image:
+  //     "https://media.discordapp.net/attachments/839620709517230081/1199728205565792276/g-token.png?ex=65c398f6&is=65b123f6&hm=cf028d3764e424247ca39235f4939c3d0acab3e678fc361c654a21c394d14b8f&=&format=webp&quality=lossless",
+  //   path: [
+  //     "0xc2086B2CD3Fca4A61ccF5C1cd029dBc64d940bcb",
+  //     "0xc2086B2CD3Fca4A61ccF5C1cd029dBc64d940bcb",
+  //   ],
+  //   pathReverse: [
+  //     "0xc2086B2CD3Fca4A61ccF5C1cd029dBc64d940bcb",
+  //     "0x55d398326f99059fF775485246999027B3197955",
+  //   ],
+  // },
 };

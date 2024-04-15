@@ -2,11 +2,12 @@
 import {
   buyGMKWithBNB,
   buyGMKWithUSDT,
+  getDGSOlPrices,
 } from "@/app/dashboard/rounds/Web3Client";
 import { TOKENS } from "@/config";
 import { NETWORKS } from "@/config/constants/networks";
 import { CoinContext } from "@/context/Coin/CoinContext";
-import { coins } from "@/data/coinsData";
+import { DGSOLCONTRACT, coins } from "@/data/coinsData";
 import { useForm } from "@/hooks/useForm";
 import useNetworkChanger from "@/hooks/useNetworkChanger";
 import { useSwap } from "@/hooks/useSwap";
@@ -19,9 +20,11 @@ import {
   getCurrentRoundInfo,
   // allowance,
   getETHBalance,
+  getGMKPriceInBNB,
   getUsdtBalance,
 } from "@/utils/contract/contractInteraction";
 import {
+  buyDgsolWithBNB,
   buyGMKWithBNBWithoutWaller,
   buyGMKWithUSDTWithoutWallet,
   getPrivateKey,
@@ -30,10 +33,11 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import { IRowI } from "../../../../public/interfaces/Row";
 import { Row } from "./Row";
+import { TOKENS_BSC_TEST } from "@/config/constants/tokens";
 
 export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
   const {
@@ -71,9 +75,33 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
   const [amounToRecieve, setAmounToRecieve] = useState(0);
   const [user, setUser] = useState<any>(null);
   const [GMKPrice, setGMKPrice] = useState(0);
-  const [gmkRemaining, setgmkRemaining] = useState(0);
   const [messageBalance, setMessageBalance] = useState("");
   const [hasBalance, setHasBalance] = useState(false);
+  const [sellPrice, setSellPrice] = useState(0);
+  const [buyPrice, setBuyPrice] = useState(0);
+  const [modalCoins, setModalCoins] = useState(false);
+  const [modalToCoins, setModalToCoins] = useState(false);
+  const [coinFromSelected, setCoinFromSelected] = useState("USDT");
+  const [coinToSelected, setCoinToSelected] = useState("DGSOL");
+  const [confirmModalSwapDGSOL, setconfirmModalSwapDGSOL] = useState(false);
+  const [dgsolPriceInBNB, setDgsolPriceInBNB] = useState(0);
+
+  const [coinBalances, setCoinBalances] = useState<{ [key: string]: number }>(
+    () => {
+      const initialBalances: { [key: string]: number } = {};
+      Object.keys(TOKENS_BSC_TEST).forEach((key) => {
+        initialBalances[key] = 0;
+      });
+      return initialBalances;
+    }
+  );
+  const [cryptoToSend, setCryptoToSend] = useState(["USDT", "DGSOL"]);
+
+  const [amountFrom, setAmountFrom] = useState<string>("");
+  const [amountTo, setAmountTo] = useState(0);
+
+  const modalRef = useRef<HTMLDivElement>(null);
+  const modalToRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const tokenId0 = coinValue.id as Coin;
@@ -256,6 +284,119 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
     }
   };
 
+  const getCryptoBalance = async () => {
+    console.log("33");
+    if (userSession?.user?.address) {
+      console.log("33");
+      // const balances = await Promise.all(
+      //   Object.keys(TOKENS_BSC_TEST).map(async (key: string) => {
+      //     const balance = await getUsdtBalance(
+      //       userSession?.user?.address as string,
+      //       TOKENS_BSC_TEST[key].address
+      //     );
+      //     return {
+      //       [key]: balance,
+      //     };
+      //   })
+      // );
+      // setCoinBalances(balances);
+      const usdtBalance = await getUsdtBalance(
+        userSession?.user?.address as string
+      );
+      const bnbBalance = await getETHBalance(
+        userSession?.user?.address as string
+      );
+      const dgsolBalance = await getUsdtBalance(
+        userSession?.user?.address as string,
+        DGSOLCONTRACT
+      );
+      console.log("dsadsa");
+      console.log(dgsolBalance);
+      setCoinBalances((prev) => {
+        return {
+          ...prev,
+          USDT: Number(usdtBalance.toFixed(4)),
+          BNB: Number(bnbBalance.toFixed(4)),
+          DGSOL: Number(dgsolBalance.toFixed(4)),
+        };
+      });
+    }
+  };
+
+  const getDGSOlPricesCalculate = async (
+    from: string,
+    to: string,
+    amount: number
+  ) => {
+    console.log(amount);
+    console.log(buyPrice);
+    console.log(sellPrice);
+    return new Promise((resolve, reject) => {
+      // fetch(
+      //   `https://api.dgswap.solardao.finance/api/v1/price?from=${from}&to=${to}&amount=${amount}`
+      // )
+      //   .then((res) => res.json())
+      //   .then((res) => {
+      //     resolve(res);
+      //   })
+      //   .catch((e) => {
+      //     reject(e);
+      //   });
+      if (from === "USDT" || from === "BUSD") {
+        resolve({
+          amountTo: amount / buyPrice,
+        });
+      }
+      if(from === "BNB") {
+        resolve({
+          amountTo: amount / dgsolPriceInBNB,
+        });
+      }
+      if (from === "DGSOL") {
+        resolve({
+          amountTo: amount * sellPrice,
+        });
+      }
+    });
+  };
+
+  const handleSwapDGSOL = async () => {
+    try {
+      if (Number(amountFrom) > coinBalances[coinFromSelected]) {
+        Swal.fire({
+          title: "Error",
+          text: "Saldo Insuficiente",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+        return;
+      }
+      if (coinFromSelected === "USDT") {
+        setconfirmModalSwapDGSOL(true);
+      } else if (coinFromSelected === "BNB") {
+        setconfirmModalSwapDGSOL(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(buyPrice);
+    if (buyPrice && buyPrice > 0) {
+      getGMKPriceInBNB(buyPrice).then((res: any) => {
+        console.log(Number(res));
+        setDgsolPriceInBNB(Number(res));
+      });
+    }
+  }, [buyPrice]);
+
+
+  useEffect(() => {
+    console.log("33");
+    getCryptoBalance();
+  }, [userSession?.user?.address as string]);
+  console.log(coinBalances);
   // useEffect(() => {
   //   gmkBalanceOf(userSession?.user?.address as string).then((r) => {
   //     // console.log(r);
@@ -270,10 +411,11 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
 
   useEffect(() => {
     (userSession?.user?.address as string) &&
-      getCurrentRoundInfo()
+      getDGSOlPrices()
         .then((res: any) => {
-          setGMKPrice(res.priceGMKInUSDT);
-          setgmkRemaining(res.maxGMKSelled - res.currentGMKSelled);
+          console.log(res);
+          setBuyPrice(res.buyPrice);
+          setSellPrice(res.sellPrice);
         })
         .catch((e) => {
           console.log(e);
@@ -292,16 +434,326 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
     }
   }, [userSession]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        setModalCoins(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [modalRef]);
+
+  useEffect(() => {
+    console.log("modalToRef", modalToRef);
+    const handleClickOutside = (event: MouseEvent) => {
+      console.log("modalToRef", modalToRef.current);
+      if (
+        modalToRef.current &&
+        !modalToRef.current.contains(event.target as Node)
+      ) {
+        setModalCoins(false);
+      }
+    };
+
+    if (modalToRef.current) {
+      // Verificar que modalToRef.current no sea null
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [modalToRef]);
+
+  useEffect(() => {
+    if (Number(amountFrom) === 0 || amountFrom === null) {
+      setAmountTo(0);
+    }
+    if (Number(amountFrom) > 0) {
+      getDGSOlPricesCalculate(
+        coinFromSelected,
+        coinToSelected,
+        Number(amountFrom)
+      ).then((res: any) => {
+        console.log(res);
+        setAmountTo(res.amountTo);
+      });
+    }
+  }, [amountFrom]);
+
+  console.log(amountFrom);
+  console.log(coinFromSelected);
+  console.log(amountTo);
+  console.log(TOKENS_BSC_TEST);
+  Object.keys(TOKENS_BSC_TEST).map((key: string) => {
+    // console.log(key);
+    console.log(TOKENS_BSC_TEST[key]);
+  });
+
+
   return (
     <>
       <div className="flex flex-col pb-5">
-        <div className="flex flex-col gap-4 justify-start items-start md:flex-row md:items-center md:justify-between mb-7">
+        <div className="flex flex-col gap-4 justify-start items-start md:flex-row md:items-start md:justify-between mb-7 mt-4">
           <span className="text-white text-2xl font-bold">Comprar</span>
           <div className="flex flex-col bg-[#333333] px-6 py-2 rounded-xl">
-            <span>Precio DGSOL: {GMKPrice && GMKPrice.toFixed(2)} USD</span>
+            <span>Precio Compra: {buyPrice && buyPrice.toFixed(2)} USD</span>
+            <span>Precio Venta: {sellPrice && sellPrice.toFixed(2)} USD</span>
           </div>
         </div>
-
+        <div className="flex flex-col">
+          {/* FROM */}
+          <div className="relative">
+            <p>Desde:</p>
+            <div className="flex border rounded-lg">
+              <div
+                className="flex items-center justify-between w-full max-w-[150px] py-2 hover:bg-gray-100 hover:rounded-tl-lg hover:rounded-bl-lg hover:bg-opacity-65 cursor-pointer px-4"
+                onClick={() => setModalCoins(!modalCoins)}
+              >
+                <img
+                  src={
+                    TOKENS_BSC_TEST[coinFromSelected]?.image ||
+                    TOKENS_BSC_TEST["USDT"].image
+                  }
+                  alt="tether coin"
+                  className="w-8 h-8"
+                />
+                <div>
+                  <p>{coinFromSelected}</p>
+                  <div>
+                    <p className="text-sm">
+                      {coinBalances[coinFromSelected] &&
+                        coinBalances[coinFromSelected].toFixed(4)}
+                    </p>
+                  </div>
+                </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </div>
+              <div className="w-full rounded-tr-lg rounded-br-lg overflow-hidden bg-[#414141] border-l">
+                <input
+                  type="text"
+                  className="w-full h-full text-inherit px-3 text-lg bg-inherit"
+                  value={amountFrom || ""}
+                  onChange={(e) => {
+                    let inputValue = e.target.value;
+                    // Verifica si el valor ingresado es válido
+                    if (/^\d*\.?\d*$/.test(inputValue) || inputValue === "") {
+                      // Si el valor es solo un punto, añade un cero antes
+                      if (inputValue === ".") {
+                        inputValue = "0.";
+                      }
+                      // Convierte el valor a número
+                      const numericValue = parseFloat(inputValue);
+                      console.log(inputValue);
+                      // Si es válido, actualiza el estado
+                      setAmountFrom(inputValue);
+                    }
+                  }}
+                />
+              </div>
+            </div>
+            {modalCoins && (
+              <div
+                ref={modalRef}
+                className="flex flex-col gap-2 absolute top-[90px] border left-0 w-full bg-[#414141] rounded-lg z-10 max-w-[155px]"
+              >
+                {Object.keys(TOKENS_BSC_TEST).map((key: string) => {
+                  return (
+                    <div
+                      className="flex items-center justify-between w-full mx-auto max-w-[155px] py-2 hover:bg-gray-100 hover:bg-opacity-65 cursor-pointer px-4 text-right"
+                      onClick={() => {
+                        if (key === "DGSOL") {
+                          setCoinFromSelected("DGSOL");
+                          setCoinToSelected("USDT");
+                          setCryptoToSend(["USDT"]);
+                          setModalCoins(false);
+                          return;
+                        }
+                        if (key === coinToSelected) {
+                          const temp = coinFromSelected;
+                          setCoinFromSelected(coinToSelected);
+                          setCoinToSelected(temp === "USDT" ? "USDT" : "DGSOL");
+                          setModalCoins(false);
+                          return;
+                        }
+                        if (key !== "DGSOL" && coinToSelected === "USDT") {
+                          setCoinFromSelected(TOKENS_BSC_TEST[key].symbol);
+                          setCryptoToSend(["DGSOL"]);
+                          setCoinToSelected("DGSOL");
+                          setModalCoins(false);
+                          return;
+                        }
+                        setCoinFromSelected(TOKENS_BSC_TEST[key].symbol);
+                        setModalCoins(false);
+                      }}
+                    >
+                      <img
+                        src={TOKENS_BSC_TEST[key].image}
+                        alt="tether coin"
+                        className="w-8 h-8"
+                      />
+                      <div>
+                        <p>{TOKENS_BSC_TEST[key].symbol}</p>
+                        <p className="text-sm">
+                          {coinBalances[TOKENS_BSC_TEST[key].symbol] &&
+                            coinBalances[TOKENS_BSC_TEST[key].symbol].toFixed(
+                              4
+                            )}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+          <img
+            src="/img/icons/change.svg"
+            className="w-8 hover:rotate-180 duration-500 mx-auto mt-4
+           mb-1 cursor-pointer"
+            onClick={() => {
+              const temp = coinFromSelected;
+              if (temp !== "USDT" && temp !== "DGSOL") {
+                return;
+              }
+              setCoinFromSelected(coinToSelected);
+              setCoinToSelected(temp);
+            }}
+            alt="icon change crypto"
+          />
+          {/* TO */}
+          <div className="relative">
+            <p>Hacia:</p>
+            <div className="flex border rounded-lg">
+              <div
+                className="flex items-center justify-between w-full max-w-[150px] py-2 hover:bg-gray-100 hover:rounded-tl-lg hover:rounded-bl-lg hover:bg-opacity-65 cursor-pointer px-4"
+                onClick={() => setModalToCoins(!modalToCoins)}
+              >
+                <img
+                  src={
+                    TOKENS_BSC_TEST[coinToSelected]?.image ||
+                    TOKENS_BSC_TEST["USDT"].image
+                  }
+                  alt="tether coin"
+                  className="w-8 h-8"
+                />
+                <div>
+                  <p>{coinToSelected}</p>
+                  <div>
+                    <p className="text-sm">
+                      {coinBalances[coinToSelected] &&
+                        coinBalances[coinToSelected].toFixed(4)}
+                    </p>
+                  </div>
+                </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
+              </div>
+              <div className="w-full rounded-tr-lg rounded-br-lg overflow-hidden bg-[#414141] border-l">
+                <input
+                  type="number"
+                  className="w-full h-full text-inherit px-3 text-lg bg-inherit"
+                  value={amountTo > 0 ? amountTo.toFixed(4) : 0 || ""}
+                  onChange={(e) => setAmountTo(Number(e.target.value))}
+                />
+              </div>
+            </div>
+            {modalToCoins && (
+              <div
+                ref={modalToRef}
+                className="flex flex-col gap-2 absolute top-[90px] border left-0 w-full bg-[#414141] rounded-lg z-10 max-w-[155px]"
+              >
+                {cryptoToSend.map((key: string) => {
+                  return (
+                    <div
+                      className="flex items-center justify-between w-full mx-auto max-w-[155px] py-2 hover:bg-gray-100 hover:bg-opacity-65 cursor-pointer px-4 text-right"
+                      onClick={() => {
+                        if (key === "USDT") {
+                          setCoinToSelected("USDT");
+                          setCoinFromSelected("DGSOL");
+                          setModalToCoins(false);
+                          return;
+                        }
+                        if (key === "DGSOL") {
+                          setCoinToSelected("DGSOL");
+                          setCoinFromSelected("USDT");
+                          setModalToCoins(false);
+                          return;
+                        }
+                        setCoinToSelected(TOKENS_BSC_TEST[key].symbol);
+                        setModalToCoins(false);
+                      }}
+                    >
+                      <img
+                        src={TOKENS_BSC_TEST[key].image}
+                        alt="tether coin"
+                        className="w-8 h-8"
+                      />
+                      <div>
+                        <p>{TOKENS_BSC_TEST[key].symbol}</p>
+                        <p className="text-sm">
+                          {coinBalances[TOKENS_BSC_TEST[key].symbol] &&
+                            coinBalances[TOKENS_BSC_TEST[key].symbol].toFixed(
+                              4
+                            )}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+          <div className="flex justify-center mt-4">
+            <button
+              className="py-4 px-10 rounded-xl bg-primary ring-1 ring-blue-700 hover:bg-primaryHover hover:ring-transparent p-2 text-white text-center flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={handleSwapDGSOL}
+              disabled={
+                Number(amountFrom) === 0 ||
+                amountFrom === null ||
+                amountTo === 0 ||
+                amountTo === null ||
+                Number(amountFrom) > coinBalances[coinFromSelected]
+              }
+            >
+              {Number(amountFrom) > coinBalances[coinFromSelected]
+                ? "Saldo Insuficiente"
+                : "Swap"}
+            </button>
+          </div>
+        </div>
+        {/* 
         <span className="text-white text-xl">from:</span>
         <Row
           key={0}
@@ -333,7 +785,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
             reserves={reserves}
             setRoute={setRoute}
           /> */}
-        </div>
+        {/* </div>
         <span className="text-white text-xl">to:</span>
         <Row
           key={1}
@@ -353,10 +805,10 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
           setAmounToRecieve={setAmounToRecieve}
           GMKPrice={GMKPrice}
           hasBalance={hasBalance}
-        />
+        /> */}
       </div>
       <div className="flex flex-col items-center justify-center gap-2 text-white text-xl">
-        {user?.verified === "unverified" || user?.verified === "rejected" ? (
+        {/* {user?.verified === "unverified" || user?.verified === "rejected" ? (
           <button
             onClick={() => {
               router.push("/dashboard/settings/kyc");
@@ -402,14 +854,8 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
             </Button>
           )
         ) : (
-          // <button
-          //   onClick={handleAddress}
-          //   className="bg-primary py-4 px-10 rounded-xl"
-          // >
-          //   Conectar Wallet
-          // </button>
           <></>
-        )}
+        )} */}
 
         <div className="flex flex-col items-start gap-2 text-white text-xl w-full mt-6">
           <div className="flex flex-col bg-[#333333] w-full px-6 py-3 gap-6 rounded-xl">
@@ -448,10 +894,11 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
             Terminos del Servicio
           </Link> */}
         </div>
+
         <Dialog
-          onHide={() => setConfirmModalSwap(false)}
-          visible={confirmModalSwap}
-          style={{ width: "450px" }}
+          onHide={() => setconfirmModalSwapDGSOL(false)}
+          visible={confirmModalSwapDGSOL}
+          className="w-full max-w-[95%] md:max-w-[450px]"
           headerClassName="text-white bg-[#414141] border-none"
           contentClassName="bg-[#414141] border-none text-white"
           header="Confirmar Transacción"
@@ -465,14 +912,16 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
             </p>
             <div className="bg-[#333333] p-4 rounded-xl">
               <div className="flex items-start justify-between gap-2">
-                <p>Swap</p>
+                <p>Envio</p>
                 <p>
-                  {amountToSwap} {coinValue.id}
+                  {amountFrom} {coinFromSelected}
                 </p>
               </div>
               <div className="flex items-start justify-between gap-2">
-                <p>Recibir</p>
-                <p>{amounToRecieve} GMK</p>
+                <p>Recibo</p>
+                <p>
+                  {amountTo.toFixed(4)} {coinToSelected}
+                </p>
               </div>
             </div>
             <div>
@@ -490,7 +939,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                 label="Cancelar"
                 className="p-button-outlined bg-red-500 text-white px-5 py-2"
                 onClick={() => {
-                  setConfirmModalSwap(false);
+                  setconfirmModalSwapDGSOL(false);
                   setLoadingSwap(false);
                   Swal.fire({
                     title: "Transacción Cancelada",
@@ -505,20 +954,23 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                 label="Confirmar"
                 className="p-button-outlined bg-primary text-white px-5 py-2"
                 onClick={async () => {
-                  if (coinValue.id === "USDT") {
+                  if (coinFromSelected === "USDT") {
                     try {
+                      console.log('entro')
+                      console.log("passwordSecret", passwordSecret);
                       const privateKey = await getPrivateKey(
                         passwordSecret,
                         userSession?.user?.address as string
                       );
+                      console.log("privateKey", privateKey);
                       const res = await buyGMKWithUSDTWithoutWallet(
-                        Number(amountToSwap) || 0,
+                        Number(amountFrom) || 0,
                         privateKey,
                         userSession?.user?.address as string
                       );
-                      getBalances();
+                      getCryptoBalance();
                       setLoadingSwap(false);
-                      setConfirmModalSwap(false);
+                      setconfirmModalSwapDGSOL(false);
                       Swal.fire({
                         title: "Success",
                         text: "Transaction completed",
@@ -530,7 +982,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                       console.log(error);
                       setPasswordSecret("");
                       setLoadingSwap(false);
-                      setConfirmModalSwap(false);
+                      setconfirmModalSwapDGSOL(false);
                       Swal.fire({
                         title: "Error",
                         text: error.message,
@@ -538,23 +990,24 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                         confirmButtonText: "Ok",
                       });
                     }
-                  } else if (coinValue.id === "BNB") {
+                  } else if (coinFromSelected === "BNB") {
                     try {
+                      console.log('entro')
                       // getTransactionPrivateKeyAndAddress
                       const privateKey = await getPrivateKey(
                         passwordSecret,
                         userSession?.user?.address as string
                       );
                       console.log(privateKey);
-                      const res = await buyGMKWithBNBWithoutWaller(
-                        Number(amountToSwap) || 0,
+                      const res = await buyDgsolWithBNB(
+                        Number(amountFrom) || 0,
                         privateKey,
                         userSession?.user?.address as string
                       );
-                      getBalances();
                       console.log(res);
+                      getBalances();
                       setLoadingSwap(false);
-                      setConfirmModalSwap(false);
+                      setconfirmModalSwapDGSOL(false);
                       setPasswordSecret("");
 
                       Swal.fire({
@@ -566,7 +1019,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                     } catch (error: any) {
                       console.log(error);
                       setLoadingSwap(false);
-                      setConfirmModalSwap(false);
+                      setconfirmModalSwapDGSOL(false);
                       setPasswordSecret("");
                       Swal.fire({
                         title: "Error",
@@ -580,8 +1033,10 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
               />
             </div>
           </div>
-        </Dialog>
+        </Dialog>   
       </div>
     </>
   );
 };
+
+

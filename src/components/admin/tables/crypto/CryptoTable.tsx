@@ -5,6 +5,7 @@ import { ICrypto } from "@/app/dashboard/page";
 import { useWallet } from "@/hooks/useWalletContext";
 import { deleteUser, updateUser } from "@/server";
 import {
+  getETHBalance,
   getGMKBalanceFromAddress,
   getGMKPriceInUSD,
   getUsdtBalance as getUSDTFROMADDRESS,
@@ -100,6 +101,30 @@ export const CryptoTable: FC<CryptoTableProps> = ({
       .catch((err) => {
         console.log(err);
       });
+    //TODO: Poner balor de ETH a USDT
+    getETHBalance(userSession?.user?.address || "0x0")
+      .then((res: any) => {
+        setuserInfo((oldState: any) => {
+          // Usar map para crear un nuevo array con las actualizaciones
+          const newState = oldState?.map((u: any) => {
+            // Comprobar si el ID es 1 y actualizar la propiedad balance
+            if (u?.id === 4) {
+              return {
+                ...u,
+                balance: `${res.toFixed(2)}`, // Actualizar la propiedad balance
+                balanceInUsd: `$${res.toFixed(2)}`,
+                price: `$${(1).toFixed(2)}`,
+              };
+            }
+            // Si no es el ID 1, devolver el objeto sin cambios
+            return u;
+          });
+          return newState; // Devolver el nuevo estado actualizado
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [userSession, gmkCurrentPrice]);
 
   return (
@@ -125,7 +150,6 @@ export const CryptoTable: FC<CryptoTableProps> = ({
           draggable={false}
         >
           <div className="flex flex-col gap-4">
-            
             <div className="flex flex-col gap-2">
               <label htmlFor="tokenContract">Contrato del Token</label>
               <input
@@ -137,7 +161,6 @@ export const CryptoTable: FC<CryptoTableProps> = ({
 
             {/* divisor */}
             <div className="border-b border-gray-500"></div>
-
 
             <div className="flex flex-col gap-2">
               <label htmlFor="tokenName">Nombre del Token</label>
@@ -166,7 +189,7 @@ export const CryptoTable: FC<CryptoTableProps> = ({
                 readOnly
               />
             </div>
-            
+
             <div className="flex justify-end gap-4">
               <button
                 className="bg-danger text-white rounded-lg py-2 px-4"
@@ -174,7 +197,10 @@ export const CryptoTable: FC<CryptoTableProps> = ({
               >
                 Cancelar
               </button>
-              <button className="bg-primary text-white rounded-lg py-2 px-4" onClick={() => setAddTokenModal(false)}>
+              <button
+                className="bg-primary text-white rounded-lg py-2 px-4"
+                onClick={() => setAddTokenModal(false)}
+              >
                 Guardar
               </button>
             </div>

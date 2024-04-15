@@ -3,7 +3,8 @@ import { getOwner } from "@/utils/contract/contractInteraction";
 import Web3 from "web3";
 import ERC20ABI from "@/config/abi/erc20.json";
 import CUSTODYABI from "@/utils/contract/abi/custodyContractABI.json";
-import { CUSTODYCONTRACT } from "@/data/coinsData";
+import dgsolpriceABI from "@/utils/contract/abi/dgsolpriceABI.json";
+import { CUSTODYCONTRACT, DGSOLCONTRACTPRICE } from "@/data/coinsData";
 import { ethers } from "ethers";
 
 let selectedAccount: string;
@@ -656,11 +657,7 @@ export const transferUSDTToAddress = async (
       (window as any).ethereum
     );
     const signer = provider.getSigner();
-    const gmkContract = new ethers.Contract(
-      contractAddress,
-      ERC20ABI,
-      signer
-    );
+    const gmkContract = new ethers.Contract(contractAddress, ERC20ABI, signer);
     const amountInWEI =
       contractAddress === TOKENS.GMK.address
         ? ethers.utils.parseUnits(amount.toString(), 8)
@@ -770,6 +767,36 @@ export const removeValidator = async (address: string) => {
         gasPrice: "20000000000",
       });
     console.log(response);
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+export const getDGSOlPrices = async () => {
+  try {
+    const web3 = new Web3(
+      new Web3.providers.HttpProvider(
+        "https://data-seed-prebsc-1-s1.binance.org:8545"
+      )
+    );
+    console.log("web3", web3);
+    const dgsolpriceContract = new web3.eth.Contract(
+      dgsolpriceABI,
+      DGSOLCONTRACTPRICE
+    );
+    console.log("dgsolpriceContract", dgsolpriceContract);
+    const response = await dgsolpriceContract.methods.getSalePrice().call();
+    const response2 = await dgsolpriceContract.methods.getBuyPrice().call();
+
+    console.log({
+      response,
+      response2,
+    });
+    return {
+      sellPrice: Number(response) / 1e18,
+      buyPrice: Number(response2) / 1e18,
+    };
   } catch (error) {
     console.log(error);
     return error;
