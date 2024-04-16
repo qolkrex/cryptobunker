@@ -347,7 +347,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
           amountTo: amount / buyPrice,
         });
       }
-      if(from === "BNB") {
+      if (from === "BNB") {
         resolve({
           amountTo: amount / dgsolPriceInBNB,
         });
@@ -390,7 +390,6 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
       });
     }
   }, [buyPrice]);
-
 
   useEffect(() => {
     console.log("33");
@@ -495,7 +494,6 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
     // console.log(key);
     console.log(TOKENS_BSC_TEST[key]);
   });
-
 
   return (
     <>
@@ -866,21 +864,19 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
             <div className="flex items-start justify-between gap-2 text-base">
               <p>Route</p>
               <p>
-                {coinsContext[0]?.name === "USDT" ||
+                {coinFromSelected === "USDT" ||
                 coinsContext[1]?.name === "USDT" ? (
                   <>
-                    {coinsContext[0]?.name}
+                    {coinFromSelected}
                     {">"}
-                    {/* {coinsContext[1]?.name} */}
                     DGSOL
                   </>
                 ) : (
                   <>
-                    {coinsContext[0]?.name}
+                    {coinFromSelected}
                     {">"}
                     {"USDT"}
                     {">"}
-                    {/* {coinsContext[1]?.name} */}
                     DGSOL
                   </>
                 )}
@@ -956,7 +952,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                 onClick={async () => {
                   if (coinFromSelected === "USDT") {
                     try {
-                      console.log('entro')
+                      console.log("entro");
                       console.log("passwordSecret", passwordSecret);
                       const privateKey = await getPrivateKey(
                         passwordSecret,
@@ -992,7 +988,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                     }
                   } else if (coinFromSelected === "BNB") {
                     try {
-                      console.log('entro')
+                      console.log("entro");
                       // getTransactionPrivateKeyAndAddress
                       const privateKey = await getPrivateKey(
                         passwordSecret,
@@ -1033,10 +1029,8 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
               />
             </div>
           </div>
-        </Dialog>   
+        </Dialog>
       </div>
     </>
   );
 };
-
-

@@ -2,7 +2,9 @@
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { TabPanel, TabView } from "primereact/tabview";
-import React, { useState } from "react";
+import { Toast, ToastMessage } from "primereact/toast";
+import { Tooltip } from "primereact/tooltip";
+import React, { useRef, useState } from "react";
 import Swal from "sweetalert2";
 
 const textConfirmationOperation = {
@@ -16,25 +18,46 @@ export const CustomTableDepositAndWithdraw = () => {
   const [showConfirmOperation, setShowConfirmOperation] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const toastBottomCenter = useRef(null);
+
+  const showMessage = (
+    ref: React.RefObject<Toast>,
+    severity: ToastMessage["severity"],
+    label: string,
+    detail: string
+  ) => {
+    ref.current?.show({
+      severity: severity,
+      summary: label,
+      detail,
+      life: 3000,
+    });
+  };
+
   return (
     <div className="bg-[#414141] px-2 py-2 mt-5">
       <TabView panelContainerClassName="bg-inherit text-white">
         <TabPanel header="Depositar" leftIcon="pi pi-arrow-circle-down mr-2">
-          <p className="m-0">
-            Deposita y recibe DgSoles en tu cuenta de usuario. Para ello, sigue
-            los siguientes pasos:
+          <p className="m-0 mb-4">
+            Deposita y recibe DgSoles en tu cuenta de usuario.{" "}
+            <i
+              id="deposit-steps"
+              className="pi pi-question-circle cursor-pointer"
+            ></i>{" "}
           </p>
-          <ol className="list-decimal ml-5 mt-1">
-            <li>Selecciona la cantidad de DgSoles que deseas depositar.</li>
-            <li>Seleccione el método de pago que prefieras.</li>
-            <li>Realiza el depósito.</li>
-            <li>Ingresa el numero de transacción.</li>
-            <li>Espera a que tu depósito sea confirmado.</li>
-          </ol>
-          <p className="m-0 text-sm mt-1">
-            <strong>Nota:</strong> El tiempo de confirmación de tu depósito
-            puede variar dependiendo del método de pago seleccionado.
-          </p>
+          <Tooltip target="#deposit-steps">
+            <div className="flex flex-col">
+              <p>Para ello, sigue los siguientes pasos:</p>
+              <ol className="list-decimal ml-5 mt-1">
+                <li>Seleccione el método de pago que prefieras.</li>
+                <li>Selecciona la cantidad de DgSoles que deseas depositar.</li>
+                <li>Realiza el depósito.</li>
+                <li>Confirmar la operación en el botón de abajo.</li>
+                <li>Ingresa el numero de transacción.</li>
+                <li>Espera a que tu depósito sea confirmado.</li>
+              </ol>
+            </div>
+          </Tooltip>
           <div className="flex flex-col gap-2 mt-2">
             <div className="flex flex-col gap-1">
               <label htmlFor="quantitySoles">Medio de Pago</label>
@@ -75,7 +98,23 @@ export const CustomTableDepositAndWithdraw = () => {
                   </div>
                   <div className="flex justify-between">
                     <p className="m-0 font-bold text-sm">N° de cuenta</p>
-                    <p className="m-0 text-sm">194216455478787</p>
+                    <p className="m-0 text-sm">
+                      194216455478787
+                      <button
+                        onClick={(event) => {
+                          navigator.clipboard.writeText("194216455478787");
+                          showMessage(
+                            toastBottomCenter,
+                            "info",
+                            "Copiado",
+                            "Número de cuenta copiado"
+                          );
+                        }}
+                      >
+                        <i className="pi pi-copy cursor-pointer ml-1"></i>
+                      </button>
+                      <Toast ref={toastBottomCenter} position="bottom-center" />
+                    </p>
                   </div>
                   <div className="flex justify-between">
                     <p className="m-0 font-bold text-sm">Tipo de cuenta</p>
@@ -132,6 +171,11 @@ export const CustomTableDepositAndWithdraw = () => {
             >
               Confirmar Operacion
             </button>
+
+            <p className="m-0 text-sm mt-2">
+              <strong>Nota:</strong> El tiempo de confirmación de tu depósito
+              puede variar dependiendo del método de pago seleccionado.
+            </p>
             <Dialog
               header="Confirmar Operacion"
               visible={showConfirmOperation}
