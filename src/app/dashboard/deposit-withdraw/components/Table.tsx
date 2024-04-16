@@ -98,7 +98,7 @@ export const CustomTableDepositAndWithdraw = () => {
                   </div>
                   <div className="flex justify-between">
                     <p className="m-0 font-bold text-sm">N° de cuenta</p>
-                    <p className="m-0 text-sm">
+                    <p className="m-0 text-sm flex items-center">
                       194216455478787
                       <button
                         onClick={(event) => {
