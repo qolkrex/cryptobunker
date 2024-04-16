@@ -1005,7 +1005,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                         userSession?.user?.address as string
                       );
                       console.log(res);
-                      getBalances();
+                      getCryptoBalance();
                       setLoadingSwap(false);
                       setconfirmModalSwapDGSOL(false);
                       setPasswordSecret("");
