@@ -34,7 +34,6 @@ const AdminPage = () => {
       });
       const data = await response.json();
 
-
       if (data.message) {
         await comprobeAndLogin(userAddress);
       }
@@ -71,7 +70,7 @@ const AdminPage = () => {
         className="flex flex-col w-full max-w-[400px] bg-primary p-10"
       >
         <h1 className="text-2xl font-bold mb-4 text-white">
-          Logueate en GoldMak
+          Logueate como Admin
         </h1>
         {/* tailwind */}
         <button

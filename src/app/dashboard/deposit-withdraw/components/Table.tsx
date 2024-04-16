@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "primereact/button";
+import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
 import { TabPanel, TabView } from "primereact/tabview";
 import { Toast, ToastMessage } from "primereact/toast";
@@ -17,6 +18,7 @@ export const CustomTableDepositAndWithdraw = () => {
   const [paymentMethod, setPaymentMethod] = useState("1");
   const [showConfirmOperation, setShowConfirmOperation] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [buyBnbFirstTime, setBuyBnbFirstTime] = useState(false);
 
   const toastBottomCenter = useRef(null);
 
@@ -80,6 +82,18 @@ export const CustomTableDepositAndWithdraw = () => {
                 id="quantitySoles"
                 name="quantitySoles"
                 className="w-full bg-[#333333] text-white p-2 rounded-md"
+              />
+            </div>
+            <div className="flex items-center justify-between gap-3 my-3">
+              <label htmlFor="buyBnbFirstTime" className="m-0 text-sm">
+                ¿Quieres comprar <b>1 USD</b> de BNB para el pago de tus Tx
+                (GAS)?, se descontará de tu depósito
+              </label>
+              {/* <input type="checkbox" className="m-0" /> */}
+              <Checkbox
+                inputId="buyBnbFirstTime"
+                checked={buyBnbFirstTime}
+                onChange={(e) => setBuyBnbFirstTime(e.checked as boolean)}
               />
             </div>
             {paymentMethod === "1" && (

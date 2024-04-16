@@ -63,10 +63,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
   const { changeNetwork, currentNetwork } = useNetworkChanger(
     NETWORKS.bsctestnet
   );
-  const { values, setValues, reset, handleFormChange } = useForm<ISwapValues>({
-    token0: "",
-    token1: "",
-  });
+ 
   console.log(walletCoins);
   console.log(CoinContext);
   const router = useRouter();
@@ -395,12 +392,6 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
     console.log("33");
     getCryptoBalance();
   }, [userSession?.user?.address as string]);
-  console.log(coinBalances);
-  // useEffect(() => {
-  //   gmkBalanceOf(userSession?.user?.address as string).then((r) => {
-  //     // console.log(r);
-  //   });
-  // }, [userSession?.user?.address as string]);
 
   useEffect(() => {
     setAmounToRecieve(0);
@@ -486,23 +477,14 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
     }
   }, [amountFrom]);
 
-  console.log(amountFrom);
-  console.log(coinFromSelected);
-  console.log(amountTo);
-  console.log(TOKENS_BSC_TEST);
-  Object.keys(TOKENS_BSC_TEST).map((key: string) => {
-    // console.log(key);
-    console.log(TOKENS_BSC_TEST[key]);
-  });
-
   return (
     <>
       <div className="flex flex-col pb-5">
         <div className="flex flex-col gap-4 justify-start items-start md:flex-row md:items-start md:justify-between mb-7 mt-4">
           <span className="text-white text-2xl font-bold">Comprar</span>
           <div className="flex flex-col bg-[#333333] px-6 py-2 rounded-xl">
-            <span>Precio Compra: {buyPrice && buyPrice.toFixed(2)} USD</span>
-            <span>Precio Venta: {sellPrice && sellPrice.toFixed(2)} USD</span>
+            <span>Precio Compra: {buyPrice && (1 / buyPrice).toFixed(4)}</span>
+            <span>Precio Venta: {sellPrice && (1 / sellPrice).toFixed(4)}</span>
           </div>
         </div>
         <div className="flex flex-col">
