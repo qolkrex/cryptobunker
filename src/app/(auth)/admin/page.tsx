@@ -74,7 +74,7 @@ const AdminPage = () => {
         </h1>
         {/* tailwind */}
         <button
-          className="px-4 py-2 bg-white text-primary rounded-md hover:bg-opacity-80 transition-all duration-300 ease-in-out"
+          className="px-4 py-2 bg-white text-primary rounded-md hover:bg-opacity-80 transition-all duration-300 ease-in-out flex items-center justify-center w-full mt-4"
           type="submit"
         >
           <svg
@@ -83,6 +83,7 @@ const AdminPage = () => {
             height="189"
             viewBox="0 0 212 189"
             id="metamask"
+            className="w-8 h-8 inline-block mr-2"
           >
             <g fill="none" fillRule="evenodd">
               <polygon
