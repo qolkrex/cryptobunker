@@ -5,20 +5,46 @@ import Swal from "sweetalert2";
 import Web3 from "web3";
 import { Personal } from "web3-eth-personal";
 import { useRouter } from "next/navigation";
+import {
+  registerUserWithAddress,
+  signInEmailAndMessage,
+} from "@/server/actions/auth/register-actions";
+import { toast } from "react-toastify";
 const AdminPage = () => {
   const router = useRouter();
   const handleLoginWithMetamask = async (e: any) => {
     try {
       e.preventDefault();
+      // await validateMetamask("metamask", true);
+      if (typeof (window as any).ethereum === "undefined") {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se encontró Metamask, por favor instala Metamask",
+        });
+        return;
+      }
       if (typeof (window as any).ethereum !== "undefined") {
         console.log("window", (window as any).ethereum);
+        const provider = (window as any).ethereum;
+
+        if (provider) {
+          console.log("MetaMask is installed!");
+
+          // Request accounts using eth_requestAccounts
+          const accounts = await provider.request({
+            method: "eth_requestAccounts",
+          });
+          console.log(accounts);
+        }
       }
       const web3 = new Web3((window as any).ethereum);
       const accounts = await web3.eth.getAccounts();
       const userAddress = accounts[0].toLowerCase();
+      console.log(userAddress);
 
       // Generar un mensaje que el usuario debe firmar
-      const message = "Atenticacion de mi cuenta";
+      const message = "Autorizo la autenticacion de mi cuenta";
 
       const personal: Personal = web3.eth.personal;
       const signature = await personal.sign(message, userAddress, "");
@@ -32,9 +58,20 @@ const AdminPage = () => {
         },
         body: JSON.stringify({ userAddress, signature }),
       });
+      console.log(response);
       const data = await response.json();
 
+      console.log(data);
+
       if (data.message) {
+        // Autenticado
+        console.log("Autenticado");
+
+        // Swal.fire({
+        //   icon: "success",
+        //   title: "Autenticado",
+        //   text: "Autenticado con éxito",
+        // });
         await comprobeAndLogin(userAddress);
       }
     } catch (error) {
@@ -46,35 +83,58 @@ const AdminPage = () => {
       });
     }
   };
+
   const comprobeAndLogin = async (address: string) => {
-    const users = await fetch("/api/users");
-    const usersJson = await users.json();
-    const user = usersJson.find((u: any) => u.address === address);
-    if (user && user.roles.includes("admin")) {
-      router.push("/dashboard");
-    } else {
+    try {
+      const users = await fetch("/api/users");
+      const usersJson = await users.json();
+      const user = await usersJson.find(
+        (u: any) => u.address.toLowerCase() === address.toLowerCase()
+      );
+      console.log(user);
+      if (user && user.email && user.roles.includes("validator")) {
+        // console.log("Usuario registrado con email");
+        const response = await signInEmailAndMessage(user.email, true);
+        console.log({ response });
+        if (response) {
+          router.push(response.message);
+        }
+      } else {
+        console.log("Usuario no registrado");
+        toast.info("Login no permitido");
+        // const user: any = await registerUserWithAddress({ address });
+        // console.log(user);
+        // if (user && user) {
+        //   const response = await signInEmailAndMessage(user.email, true);
+        //   console.log({ response });
+        //   if (response) {
+        //     router.push(response.message);
+        //   }
+        // }
+      }
+    } catch (error) {
+      console.log(error);
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Address no vinculada a un usuario o no es admin",
+        text: "Hubo un error al autenticar, intente de nuevo",
       });
     }
   };
   // TODO: Detecter si esta en la red de Binance Smart Chain testnet
   return (
     <div className="h-screen flex min-h-[850px] flex-col justify-center items-center bg-hero bg-cover bg-no-repeat bg-center z-10 relative overflow-hidden before:content-[''] before:absolute before:inset-0 before:block before:bg-gradient-to-r before:from-black before:to-black before:opacity-50 before:z-[-5]">
-      <h2>AdminPage</h2>
       <form
         // action={dispatch}
         onSubmit={handleLoginWithMetamask}
-        className="flex flex-col w-full max-w-[400px] bg-primary p-10"
+        className="flex flex-col w-full max-w-[400px] bg-white/65 p-10"
       >
-        <h1 className="text-2xl font-bold mb-4 text-white">
+        <h1 className="text-2xl font-bold mb-4 text-black/90">
           Logueate como Admin
         </h1>
         {/* tailwind */}
         <button
-          className="px-4 py-2 bg-white text-primary rounded-md hover:bg-opacity-80 transition-all duration-300 ease-in-out flex items-center justify-center w-full mt-4"
+          className="px-4 py-2 bg-primary text-white rounded-md hover:bg-opacity-80 transition-all duration-300 ease-in-out flex items-center justify-center w-full mt-4"
           type="submit"
         >
           <svg
@@ -216,14 +276,6 @@ const AdminPage = () => {
           </svg>
           Conecta con Metamask
         </button>
-        <div className="mt-2 h-1 bg-white bg-opacity-60" />
-
-        {/* olvidaste tu constraseña */}
-        <p className="mt-2 text-end">
-          <Link href="/forgot-password" className="text-blue-600">
-            Forgot Password
-          </Link>
-        </p>
       </form>
     </div>
   );
