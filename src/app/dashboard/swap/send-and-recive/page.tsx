@@ -409,9 +409,10 @@ export default function PageSendAndRecive() {
               </div>
             </div>
             <Button
-              type="submit"
+              type="button"
               loading={loading}
               className="w-full mt-4 py-2 px-10 bg-primary hover:bg-primaryHover hover:ring-primary p-2 text-white text-center flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={() => setShowDialog(true)}
             >
               <p className="mx-auto text-lg font-bold">Enviar</p>
             </Button>
