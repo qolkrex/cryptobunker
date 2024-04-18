@@ -49,10 +49,10 @@ export default function Home() {
                   necesidades de intercambio de criptomonedas.
                 </p>
                 <Link
-                  href="/register"
+                  href="/login"
                   className="w-full max-w-[300px] py-4 mt-5 text-xl text-center font-semibold text-white bg-primary hover:bg-primaryHover transition-colors rounded-md font-paragraph"
                 >
-                  ¡ÚNETE AHORA!
+                  ¡ÚNETE!
                 </Link>
               </div>
             </div>

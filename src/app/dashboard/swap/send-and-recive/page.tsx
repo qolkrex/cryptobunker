@@ -17,6 +17,7 @@ import { TypeOptions, toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { transferUSDTToAddress } from "../../rounds/Web3Client";
 import { Tooltip } from "primereact/tooltip";
+import { DGSOLCONTRACT } from "@/data/coinsData";
 
 export default function PageSendAndRecive() {
   const [show, setShow] = useState(true);
@@ -40,11 +41,11 @@ export default function PageSendAndRecive() {
       image: "/img/crypto/TETHER.png",
       address: TOKENS.USDT.address,
     },
-    GMK: {
+    DGSOL: {
       balance: 0,
       symbol: "DGSOL",
       image: "/img/crypto/dgsol-token-2-white.webp",
-      address: TOKENS.GMK.address,
+      address: DGSOLCONTRACT,
     },
   });
   // console.log(address);
@@ -179,8 +180,8 @@ export default function PageSendAndRecive() {
       setCoins((oldState) => {
         return {
           ...oldState,
-          GMK: {
-            ...oldState.GMK,
+          DGSOL: {
+            ...oldState.DGSOL,
             balance: Number(res),
           },
         };
@@ -323,7 +324,7 @@ export default function PageSendAndRecive() {
                   <div
                     className="flex flex-col "
                     onClick={() => {
-                      setActiveCoin("GMK");
+                      setActiveCoin("DGSOL");
                       setShowSelect(false);
                     }}
                   >

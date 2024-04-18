@@ -110,14 +110,15 @@ export const Navbar = () => {
                   )}
                 </>
               ) : (
-                <li>
-                  <Link
-                    href="/login"
-                    className="flex items-center justify-center bg-primary py-4 px-10 rounded-md w-[179px] text-white"
-                  >
-                    Únete
-                  </Link>
-                </li>
+                <></>
+                // <li>
+                //   <Link
+                //     href="/login"
+                //     className="flex items-center justify-center bg-primary py-4 px-10 rounded-md w-[179px] text-white"
+                //   >
+                //     Únete
+                //   </Link>
+                // </li>
               )}
             </ul>
           </div>
@@ -149,14 +150,15 @@ export const Navbar = () => {
                     )}
                   </>
                 ) : (
-                  <li>
-                    <Link
-                      href="/login"
-                      className="block py-2 px-3 text-white  rounded bg-opacity-20 md:p-0 md:bg-transparent hover:bg-yellow-500 transition-colors "
-                    >
-                      Únete
-                    </Link>
-                  </li>
+                  // <li>
+                  //   <Link
+                  //     href="/login"
+                  //     className="block py-2 px-3 text-white  rounded bg-opacity-20 md:p-0 md:bg-transparent hover:bg-yellow-500 transition-colors "
+                  //   >
+                  //     Únete
+                  //   </Link>
+                  // </li>
+                  <></>
                 )}
               </ul>
             </div>
