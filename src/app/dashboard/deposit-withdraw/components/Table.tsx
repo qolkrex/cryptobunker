@@ -229,19 +229,23 @@ export const CustomTableDepositAndWithdraw = () => {
           <div>
             <h2>Retirar a tu banco</h2>
             <p>
-              Retira tus DgSoles a tu cuenta bancaria. Para ello, sigue los
-              siguientes pasos:
+              Retira tus DgSoles a tu cuenta bancaria.{" "}
+              <i
+                id="withdraw-steps"
+                className="pi pi-question-circle cursor-pointer"
+              ></i>
             </p>
-            <ol className="list-decimal ml-5 mt-1">
-              <li>Selecciona la cantidad de DgSoles que deseas retirar.</li>
-              <li>Selecciona el banco de destino.</li>
-              <li>Ingresa el número de cuenta.</li>
-              <li>Espera a que tu retiro sea confirmado.</li>
-            </ol>
-            <p className="m-0 text-sm mt-1">
-              <strong>Nota:</strong> El tiempo de confirmación de tu retiro
-              puede variar dependiendo del banco seleccionado.
-            </p>
+            <Tooltip target="#withdraw-steps">
+              <div>
+                <p>Para ello, sigue los siguientes pasos:</p>
+                <ol className="list-decimal ml-5 mt-1">
+                  <li>Selecciona la cantidad de DgSoles que deseas retirar.</li>
+                  <li>Selecciona el banco de destino.</li>
+                  <li>Ingresa el número de cuenta.</li>
+                  <li>Espera a que tu retiro sea confirmado.</li>
+                </ol>
+              </div>
+            </Tooltip>
             <div className="flex flex-col gap-2 mt-2">
               <div className="flex flex-col gap-1">
                 <label htmlFor="quantitySoles">Cantidad</label>
@@ -288,6 +292,11 @@ export const CustomTableDepositAndWithdraw = () => {
               >
                 Retirar
               </button>
+
+              <p className="m-0 text-sm opacity-90 mt-1">
+                <strong>Nota:</strong> El tiempo de confirmación de tu retiro
+                puede variar dependiendo del banco seleccionado.
+              </p>
             </div>
           </div>
         </TabPanel>
