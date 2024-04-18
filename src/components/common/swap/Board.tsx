@@ -28,6 +28,7 @@ import {
   buyGMKWithBNBWithoutWaller,
   buyGMKWithUSDTWithoutWallet,
   getPrivateKey,
+  sellDgsolForUSDT,
 } from "@/utils/contract/contractWithoutWalletInteraction";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -63,10 +64,6 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
   const { changeNetwork, currentNetwork } = useNetworkChanger(
     NETWORKS.bsctestnet
   );
- 
-  console.log(walletCoins);
-  console.log(CoinContext);
-  const router = useRouter();
 
   const [amountToSwap, setAmountToSwap] = useState<string>("");
   const [amounToRecieve, setAmounToRecieve] = useState(0);
@@ -372,6 +369,8 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
         setconfirmModalSwapDGSOL(true);
       } else if (coinFromSelected === "BNB") {
         setconfirmModalSwapDGSOL(true);
+      } else if (coinFromSelected === "DGSOL") {
+        setconfirmModalSwapDGSOL(true);
       }
     } catch (error) {
       console.log(error);
@@ -476,6 +475,8 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
       });
     }
   }, [amountFrom]);
+
+  console.log(coinFromSelected);
 
   return (
     <>
@@ -858,8 +859,8 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                     {coinFromSelected}
                     {">"}
                     {"USDT"}
-                    {">"}
-                    DGSOL
+                    {coinFromSelected !== "DGSOL" && ">"}
+                    {coinFromSelected === "DGSOL" ? "" : "USDT"}
                   </>
                 )}
               </p>
@@ -1005,6 +1006,35 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                         icon: "error",
                         confirmButtonText: "Ok",
                       });
+                    }
+                  } else if (coinFromSelected === "DGSOL") {
+                    try {
+                      const privateKey = await getPrivateKey(
+                        passwordSecret,
+                        userSession?.user?.address as string
+                      );
+                      const res = await sellDgsolForUSDT(
+                        Number(amountFrom) || 0,
+                        privateKey,
+                        userSession?.user?.address as string
+                      );
+                      console.log(res);
+                      getCryptoBalance();
+                      setLoadingSwap(false);
+                      setconfirmModalSwapDGSOL(false);
+                      setPasswordSecret("");
+
+                      Swal.fire({
+                        title: "Success",
+                        text: "Transaction completed",
+                        icon: "success",
+                        confirmButtonText: "Ok",
+                      });
+                    } catch (error) {
+                      setPasswordSecret("");
+                      setLoadingSwap(false);
+                      setconfirmModalSwapDGSOL(false);
+                      console.log(error);
                     }
                   }
                 }}

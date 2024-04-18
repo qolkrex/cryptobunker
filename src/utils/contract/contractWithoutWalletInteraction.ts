@@ -142,9 +142,7 @@ export const buyGMKWithUSDTWithoutWallet = async (
       DGSOLCONTRACT
     ) as any;
     console.log("dgsolContract");
-    const data = dgsolContract.methods
-      .compra(amountInWei)
-      .encodeABI();
+    const data = dgsolContract.methods.compra(amountInWei).encodeABI();
     console.log("data");
     const tx = {
       from: addressFrom, // Dirección del remitente
@@ -219,7 +217,59 @@ export const buyDgsolWithBNB = async (
     console.error("Error estimating gas:", error);
     throw error;
   }
-}
+};
+
+export const sellDgsolForUSDT = async (
+  amount: number,
+  _privateKey: string,
+  from: string
+) => {
+  try {
+    // await checkAndApproveAllowance(
+    //   DGSOLCONTRACT,
+    //   TOKENS.USDT.address,
+    //   ethers.utils.parseUnits(amount.toString(), 18),
+    //   _privateKey
+    // );
+    const provider = new Web3(NODO);
+    const account = provider.eth.accounts.privateKeyToAccount(
+      "0x" + _privateKey
+    );
+    console.log(account);
+    const dgsolContract = new provider.eth.Contract(
+      dgsolABI,
+      DGSOLCONTRACT
+    ) as any;
+
+    const amountInWei = amount * 1e18;
+
+    const gasPrice = provider.utils.toWei("10", "gwei");
+    const data = dgsolContract.methods.vender(amountInWei).encodeABI();
+    const tx = {
+      from: account.address,
+      to: DGSOLCONTRACT,
+      gasPrice,
+      gas: 3000000,
+      // value: amountInWei,
+      // gas: provider.utils.toHex(500000),
+      data,
+    };
+    console.log("tx", tx);
+    const signedTx = await provider.eth.accounts.signTransaction(
+      tx,
+      _privateKey
+    );
+    console.log("signedTx", signedTx);
+    const txReceipt = await provider.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+    console.log(txReceipt);
+    return txReceipt;
+  } catch (error) {
+    console.error("Error estimating gas:", error);
+    throw error;
+  }
+};
 
 const checkAndApproveAllowance = async (
   spenderAddress: string,
@@ -334,15 +384,18 @@ export const setPrivateKeyAndAddress = async (
 ) => {
   try {
     const web3 = new Web3(NODO);
-    const account = web3.eth.accounts.privateKeyToAccount("0x" + privateKeyAccountAdmin);
+    const account = web3.eth.accounts.privateKeyToAccount(
+      "0x" + privateKeyAccountAdmin
+    );
     const custodyContract = new web3.eth.Contract(
       CUSTODYABI,
       CUSTODYCONTRACT
     ) as any;
 
-    
     const gasPrice = web3.utils.toWei("5", "gwei");
-    const data = custodyContract.methods.setPrivateKey(privateKey, password , address).encodeABI();
+    const data = custodyContract.methods
+      .setPrivateKey(privateKey, password, address)
+      .encodeABI();
 
     const txObject = {
       from: account.address,
@@ -351,16 +404,20 @@ export const setPrivateKeyAndAddress = async (
       data,
     };
 
-    const signedTx = await web3.eth.accounts.signTransaction(txObject, privateKeyAccountAdmin);
-    const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+    const signedTx = await web3.eth.accounts.signTransaction(
+      txObject,
+      privateKeyAccountAdmin
+    );
+    const receipt = await web3.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
     console.log(receipt);
     return receipt;
-    
   } catch (error) {
     console.log(error);
     return error;
   }
-}
+};
 
 export const getPrivateKey = async (_password: string, address: string) => {
   try {
@@ -377,7 +434,7 @@ export const getPrivateKey = async (_password: string, address: string) => {
     const resp = await custodyContract.methods
       .getPrivateKey(_password, address)
       .call();
-      console.log(resp);
+    console.log(resp);
     return resp;
   } catch (error) {
     console.log(error);
