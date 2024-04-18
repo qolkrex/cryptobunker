@@ -65,12 +65,12 @@ export const templateKycApprove = (data: KYCEmail) => {
             <p>¡Hola ${data.name}!</p>
             <p>
               Nos complace informarte que tu proceso de verificación KYC en
-              Goldmak ha sido exitoso. ¡Bienvenido oficialmente a nuestra
+              Cryptobunker ha sido exitoso. ¡Bienvenido oficialmente a nuestra
               plataforma!
             </p>
             <p>
               A partir de ahora, estás listo para disfrutar de todas las funciones
-              y beneficios que Goldmak tiene para ofrecer. Recuerda que ahora
+              y beneficios que Cryptobunker tiene para ofrecer. Recuerda que ahora
               puedes participar en transacciones seguras y confiables dentro de
               nuestro ecosistema de construcción.
             </p>
@@ -81,7 +81,7 @@ export const templateKycApprove = (data: KYCEmail) => {
               nunca la compartas con nadie.
             </p>
             <p>
-              ¡Gracias por unirte a Goldmak y por ser parte de nuestra comunidad!
+              ¡Gracias por unirte a Cryptobunker y por ser parte de nuestra comunidad!
               Si tienes alguna pregunta o necesitas asistencia, no dudes en
               contactar a nuestro equipo de soporte. Estamos aquí para ayudarte en
               cada paso del camino.
@@ -92,7 +92,7 @@ export const templateKycApprove = (data: KYCEmail) => {
           <td colspan="2" style="padding: 16px">
             <p>¡Que tengas un excelente día!</p>
             <p>Gracias,</p>
-            <p>El equipo de Goldmak</p>
+            <p>El equipo de Cryptobunker</p>
           </td>
         </tr>
       </table>

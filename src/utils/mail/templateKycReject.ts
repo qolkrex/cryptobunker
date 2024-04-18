@@ -50,11 +50,17 @@ export const templateKycReject = (data: KYCEmailReject) => {
                   padding-top: 10px;
                 "
               >
-                <img
-                  src="https://res.cloudinary.com/giandiaz/image/upload/v1708035900/tthbbg7ovgxm4ww71igx.png"
-                  alt="Logo"
-                  style="width: 500; height: 100px; margin-bottom: 10px"
-                />
+              <img
+              src="https://res.cloudinary.com/giandiaz/image/upload/v1713478182/cryptobunker-letras.png"
+              alt="Logo"
+              style="
+                width: 500px;
+                height: 65px;
+                max-width: 500px;
+                max-height: 65px;
+                filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.7));
+              "
+            />
               </div>
             </div>
           </td>
@@ -72,7 +78,7 @@ export const templateKycReject = (data: KYCEmailReject) => {
         <tr>
           <td colspan="2" style="padding: 16px">
             <p>Gracias,</p>
-            <p>El equipo de Goldmak</p>
+            <p>El equipo de Cryptobunker</p>
           </td>
         </tr>
       </table>

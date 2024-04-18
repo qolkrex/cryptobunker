@@ -1,15 +1,4 @@
-export interface RegisterUser {
-  name: string;
-  email: string;
-  password: string;
-  link: string;
-  expires: string;
-}
-
-export const templateLogin = (data: RegisterUser) => {
-  console.log(data);
-  return `
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
@@ -47,7 +36,7 @@ export const templateLogin = (data: RegisterUser) => {
               style="
                 margin: 20px auto;
                 display: flex;
-                flex-direction: column;
+                /* flex-direction: column; */
                 justify-content: center;
                 align-items: center;
               "
@@ -66,7 +55,7 @@ export const templateLogin = (data: RegisterUser) => {
                 alt="Logo"
                 style="
                   width: 500px;
-                  height: 65px;
+                  height: 100px;
                   max-width: 500px;
                   max-height: 65px;
                   filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.7));
@@ -115,6 +104,3 @@ export const templateLogin = (data: RegisterUser) => {
     </table>
   </body>
 </html>
-
-`;
-};

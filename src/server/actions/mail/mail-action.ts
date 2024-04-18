@@ -11,7 +11,7 @@ export const sendRegisterMail = async (data: RegisterUser) => {
   await sendMail({
     from: "romelx23@gmail.com",
     to: data.email,
-    subject: "Confirmación de cuenta en Goldmak",
+    subject: "Confirmación de cuenta en Cryptobunker",
     html: templateRegister(data),
   });
 };
@@ -20,7 +20,7 @@ export const sendLoginMail = async (data: RegisterUser) => {
   await sendMail({
     from: "romelx23@gmail.com",
     to: data.email,
-    subject: "Confirmación Login Goldmak",
+    subject: "Confirmación Login Cryptobunker",
     html: templateLogin(data),
   });
 };
@@ -29,7 +29,7 @@ export const sendKycApproveMail = async (data: KYCEmail) => {
   await sendMail({
     from: "romelx23@gmail.com",
     to: data.email,
-    subject: "¡Tu KYC ha sido validado en Goldmak!",
+    subject: "¡Tu KYC ha sido validado en Cryptobunker!",
     html: templateKycApprove(data),
   });
 };

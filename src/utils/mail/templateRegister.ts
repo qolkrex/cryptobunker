@@ -48,17 +48,23 @@ export const templateRegister = (data: RegisterUser) => {
                 "
               >
               <img
-              src="https://res.cloudinary.com/giandiaz/image/upload/v1708035900/tthbbg7ovgxm4ww71igx.png"
-              alt="Logo"
-              style="width: 500; height: 100px;"
-            />
+                src="https://res.cloudinary.com/giandiaz/image/upload/v1713478182/cryptobunker-letras.png"
+                alt="Logo"
+                style="
+                  width: 500px;
+                  height: 65px;
+                  max-width: 500px;
+                  max-height: 65px;
+                  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.7));
+                "
+              />
               </div>
             </div>
           </td>
         </tr>
         <tr>
           <td colspan="2" style="padding: 16px">
-            <h1>¡Gracias por registrarte en Goldmak!</h1>
+            <h1>¡Gracias por registrarte en Cryptobunker!</h1>
             <p>${data.name}</p>
             <p>Para confirmar tu cuenta, haz clic en el siguiente enlace:</p>
             <p>
@@ -90,7 +96,7 @@ export const templateRegister = (data: RegisterUser) => {
           <td colspan="2" style="padding: 16px">
             <p>Este enlace caducará en ${data.expires}.</p>
             <p>Gracias,</p>
-            <p>El equipo de Goldmak</p>
+            <p>El equipo de Cryptobunker</p>
           </td>
         </tr>
       </table>
