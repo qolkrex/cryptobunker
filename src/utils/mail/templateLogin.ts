@@ -53,15 +53,6 @@ export const templateLogin = (data: RegisterUser) => {
               "
             >
               <img
-                src="https://res.cloudinary.com/giandiaz/image/upload/v1713478190/cryptobunker-octagono.png"
-                alt="Logo"
-                style="
-                  width: 70px;
-                  height: 70px;
-                  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
-                "
-              />
-              <img
                 src="https://res.cloudinary.com/giandiaz/image/upload/v1713478182/cryptobunker-letras.png"
                 alt="Logo"
                 style="
