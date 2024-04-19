@@ -474,9 +474,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
         setAmountTo(res.amountTo);
       });
     }
-  }, [amountFrom]);
-
-  console.log(coinFromSelected);
+  }, [amountFrom, coinFromSelected, coinToSelected]);
 
   return (
     <>
