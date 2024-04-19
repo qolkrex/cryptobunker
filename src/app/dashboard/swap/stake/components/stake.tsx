@@ -16,7 +16,7 @@ export const StakeComponent = () => {
     }
   }, [quantity, time]);
   return (
-    <div className="w-full max-w-[95%] mx-auto px-2 md:px-4 py-2 md:py-4 my-5 mb-10 bg-[#414141] text-white md:max-w-[560px]">
+    <div className="w-full max-w-[95%] mx-auto px-2 md:px-4 py-2 md:py-4 my-5 mb-10 bg-[#414141] text-white md:max-w-[700px]">
       <TabView panelContainerClassName="bg-[#414141] text-white">
         <TabPanel header="Staking">
           <div className="flex flex-col gap-2 mt-2 md:mt-5">
@@ -107,13 +107,19 @@ export const StakeComponent = () => {
             ¡Gracias por ser parte de nuestra comunidad de fundadores en
             CryptoBunker!
           </p>
-          <div className="mt-5">
-            <Button
+          <div className="mt-5 flex items-center gap-3">
+            <p>
+              Recompensas: <span className="font-bold">0.0000 DGSOL</span>
+            </p>
+            <button
               disabled
               className="disabled:opacity-70 disabled:cursor-not-allowed bg-[#333333] px-5 py-2 rounded-md text-white"
             >
               Retirar
-            </Button>
+            </button>
+            <p className="text-yellow-400">
+              Aún no eres un founder{" "}
+            </p>
           </div>
         </TabPanel>
       </TabView>
