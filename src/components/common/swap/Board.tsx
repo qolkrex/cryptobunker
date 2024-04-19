@@ -79,6 +79,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
   const [coinToSelected, setCoinToSelected] = useState("DGSOL");
   const [confirmModalSwapDGSOL, setconfirmModalSwapDGSOL] = useState(false);
   const [dgsolPriceInBNB, setDgsolPriceInBNB] = useState(0);
+  const [loadingModalConfirm, setLoadingModalConfirm] = useState(false);
 
   const [coinBalances, setCoinBalances] = useState<{ [key: string]: number }>(
     () => {
@@ -930,8 +931,12 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
               />
               <Button
                 label="Confirmar"
-                className="p-button-outlined bg-primary text-white px-5 py-2"
+                className="p-button-outlined bg-primary text-white px-5 py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                loading={loadingModalConfirm}
+                disabled={loadingModalConfirm}
                 onClick={async () => {
+                  setLoadingSwap(true);
+                  setLoadingModalConfirm(true);
                   if (coinFromSelected === "USDT") {
                     try {
                       console.log("entro");
@@ -948,6 +953,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                       );
                       getCryptoBalance();
                       setLoadingSwap(false);
+                      setLoadingModalConfirm(false);
                       setconfirmModalSwapDGSOL(false);
                       Swal.fire({
                         title: "Success",
@@ -960,6 +966,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                       console.log(error);
                       setPasswordSecret("");
                       setLoadingSwap(false);
+                      setLoadingModalConfirm(false);
                       setconfirmModalSwapDGSOL(false);
                       Swal.fire({
                         title: "Error",
@@ -985,6 +992,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                       console.log(res);
                       getCryptoBalance();
                       setLoadingSwap(false);
+                      setLoadingModalConfirm(false);
                       setconfirmModalSwapDGSOL(false);
                       setPasswordSecret("");
 
@@ -997,6 +1005,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                     } catch (error: any) {
                       console.log(error);
                       setLoadingSwap(false);
+                      setLoadingModalConfirm(false);
                       setconfirmModalSwapDGSOL(false);
                       setPasswordSecret("");
                       Swal.fire({
@@ -1021,20 +1030,37 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                       getCryptoBalance();
                       setLoadingSwap(false);
                       setconfirmModalSwapDGSOL(false);
+                      setLoadingModalConfirm(false);
                       setPasswordSecret("");
-
                       Swal.fire({
                         title: "Success",
                         text: "Transaction completed",
                         icon: "success",
                         confirmButtonText: "Ok",
                       });
-                    } catch (error) {
+                    } catch (error: any) {
                       setPasswordSecret("");
                       setLoadingSwap(false);
+                      setLoadingModalConfirm(false);
                       setconfirmModalSwapDGSOL(false);
                       console.log(error);
+                      Swal.fire({
+                        title: "Error",
+                        text: error?.message || "Error desconocido",
+                        icon: "error",
+                        confirmButtonText: "Ok",
+                      });
                     }
+                  } else {
+                    setLoadingSwap(false);
+                    setLoadingModalConfirm(false);
+                    setconfirmModalSwapDGSOL(false);
+                    Swal.fire({
+                      title: "Error",
+                      text: "Error desconocido",
+                      icon: "error",
+                      confirmButtonText: "Ok",
+                    });
                   }
                 }}
               />
