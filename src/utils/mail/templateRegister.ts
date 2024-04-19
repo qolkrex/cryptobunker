@@ -94,7 +94,7 @@ export const templateRegister = (data: RegisterUser) => {
         </tr>
         <tr>
           <td colspan="2" style="padding: 16px">
-            <p>Este enlace caducará en ${data.expires}.</p>
+            <p>Este enlace es de un solo uso y expira en ${data.expires}.</p>
             <p>Gracias,</p>
             <p>El equipo de Cryptobunker</p>
           </td>
