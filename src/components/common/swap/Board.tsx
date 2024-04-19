@@ -665,6 +665,7 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
                   className="w-full h-full text-inherit px-3 text-lg bg-inherit"
                   value={amountTo > 0 ? amountTo.toFixed(4) : 0 || ""}
                   onChange={(e) => setAmountTo(Number(e.target.value))}
+                  readOnly
                 />
               </div>
             </div>
