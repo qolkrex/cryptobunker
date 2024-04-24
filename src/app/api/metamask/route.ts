@@ -4,7 +4,7 @@ export async function POST(request: Request) {
   const { userAddress, signature } = await request.json();
   console.log(request)
   console.log({ userAddress, signature })
-  const message = "Atenticacion de mi cuenta";
+  const message = "Autorizo la autenticacion de mi cuenta";
   const web3 = new Web3("https://data-seed-prebsc-1-s1.binance.org:8545");
   try {
     const signer = await web3.eth.accounts.recover(message, signature);
