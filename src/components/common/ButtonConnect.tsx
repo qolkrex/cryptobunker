@@ -61,7 +61,7 @@ export const ButtonConnect: FC<Props> = ({ openModal, setOpenModal }) => {
             }
             {
                 <>
-                    <ButtonBase
+                    {/* <ButtonBase
                         variant={"alert"}
                         onClick={() => {
                             web3?.account ? setOpenModal(true) : validate("metamask")
@@ -75,9 +75,9 @@ export const ButtonConnect: FC<Props> = ({ openModal, setOpenModal }) => {
                             height={30}
                         />
                         {
-                            web3?.account ? `${ web3?.account.substring(0, 10) }...` : "Connect Wallet"
+                            web3?.account && `${ web3?.account.substring(0, 10) }...`
                         }
-                    </ButtonBase>
+                    </ButtonBase> */}
                 </>
             }
         </>

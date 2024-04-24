@@ -62,7 +62,7 @@ export default function PageSendAndRecive() {
     });
   };
 
-  const commission = amountToSend * 0.000009;
+  const commission = amountToSend * 0.003;
   const totalToPay: number = amountToSend + commission;
 
   console.log("totalToPay", totalToPay);
@@ -192,7 +192,7 @@ export default function PageSendAndRecive() {
   useEffect(() => {
     getBalanceInSendAndReceive();
   }, [data]);
-
+  
   // use effect to click outside the select and close it
   useEffect(() => {
     const clickOutside = (e: MouseEvent) => {
@@ -378,7 +378,7 @@ export default function PageSendAndRecive() {
             </div>
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between gap-2">
-                <p>Enviar</p>
+                <p>Monto ingresado</p>
                 <p>
                   {amountToSend} {activeCoin}
                 </p>
@@ -395,16 +395,16 @@ export default function PageSendAndRecive() {
                 </Tooltip>
                 <p id="fcs-text">
                   Comisión -{" "}
-                  <span className="font-bold text-sm">0.0009% (FCS) (?)</span>
+                  <span className="font-bold text-sm">0.3% (FCS) (?)</span>
                 </p>
                 <p>
-                  {commission.toFixed(3) || 0} {activeCoin}
+                  {commission.toFixed(4) || 0} {activeCoin}
                 </p>
               </div>
               <div className="flex items-center justify-between gap-2">
-                <p>Total a pagar</p>
+                <p>Total a enviar</p>
                 <p>
-                  {(Number(amountToSend) + Number(commission)).toFixed(4)}{" "}
+                  {( Number(amountToSend) - Number(commission)).toFixed(4)}{" "}
                   {activeCoin}
                 </p>
               </div>

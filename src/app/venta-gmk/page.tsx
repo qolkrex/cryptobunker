@@ -42,17 +42,11 @@ export default function SellPage() {
                                 <ButtonSimple content="TOKENS" />
                             </div>
                             {/* <ButtonSimple content="Connect Wallet" /> */}
-                            <ButtonConnect
+                            {/* <ButtonConnect
                                 openModal={openModalConnect}
                                 setOpenModal={setOpenModalConnect}
-                            />
-                            {/* <button className="flex items-center justify-center  h-14 bg-primary rounded-md text-black font-bold text-xl px-10">
-                            Connect Wallet
-                        </button> */}
+                            /> */}
                         </div>
-                        <span className='mt-5 text-center text-3xl font-semibold text-white'>
-                            ADQUISICIÓN DE GOLDMAK:
-                        </span>
                         <Board slipage={slipage} setOpen={setOpen} reserves={reserves} />
                     </div>
                 </div>

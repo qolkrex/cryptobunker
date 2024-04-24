@@ -72,7 +72,7 @@ const KYCForm = () => {
       (step === 3 &&
         (!watch("country") ||
           !watch("typeDocument") ||
-          !watch("numberDocument"))) ||
+          !watch("numberDocument")) || documentNumberExist ) ||
       (step === 5 && (!image1URL || !image2URL)) ||
       false
     );
@@ -212,6 +212,8 @@ const KYCForm = () => {
 
   const checkDocumentNumberExist = async (documentNumber: string) => {
     console.log(documentNumber);
+    console.log(documentNumberExist)
+    console.log(step)
     if (documentNumber) {
       const findUser = await findUserBYDocumentNumber(documentNumber);
       console.log(findUser);
@@ -431,7 +433,7 @@ const KYCForm = () => {
                     }`}
                     {...register("numberDocument", {
                       required: "Número de documento es requerido",
-                      onBlur: (e) => checkDocumentNumberExist(e.target.value),
+                      onChange: (e) => checkDocumentNumberExist(e.target.value),
                     })}
                     placeholder="Número de documento"
                   />
