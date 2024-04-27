@@ -802,3 +802,31 @@ export const getDGSOlPrices = async () => {
     return error;
   }
 };
+
+export const setNewPricesDGSOL = async (
+  _sellPrice: number,
+  _buyPrice: number,
+) => {
+  try {
+    // use metamask provider
+    const provider = new ethers.providers.Web3Provider(
+      (window as any).ethereum
+    );
+    const signer = provider.getSigner();
+    const dgsolpriceContract = new ethers.Contract(
+      DGSOLCONTRACTPRICE,
+      dgsolpriceABI,
+      signer
+    );
+    const sellPrice = ethers.utils.parseUnits(_sellPrice.toString(), 18);
+    const buyPrice = ethers.utils.parseUnits(_buyPrice.toString(), 18);
+    const response = await dgsolpriceContract.setPrices(sellPrice, buyPrice);
+    console.log(response);
+    const tx = await response.wait();
+    console.log(tx);
+    return tx;
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(`Error al establecer los precios: ${error?.message}`);
+  }
+};

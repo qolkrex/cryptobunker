@@ -334,7 +334,7 @@ const checkAndApproveAllowance = async (
     );
   }
 };
-
+ 
 export const addToWhiteListWithAdmin = async (
   address: string,
   privateKey: string
@@ -439,5 +439,181 @@ export const getPrivateKey = async (_password: string, address: string) => {
   } catch (error) {
     console.log(error);
     throw new Error("Error: Contraseña incorrecta");
+  }
+};
+
+export const transferBnbToAccount = async (
+  address: string,
+  amount: number,
+  privateKey: string
+) => {
+  try {
+    const web3 = new Web3(NODO);
+    const account = web3.eth.accounts.privateKeyToAccount("0x" + privateKey);
+    const dgsolContract = new web3.eth.Contract(dgsolABI, DGSOLCONTRACT) as any;
+    console.log(account.address);
+    console.log(amount);
+
+    const balance = await web3.eth.getBalance(account.address);
+    const amountInWei = amount * 1e18;
+    console.log(balance);
+    console.log(amountInWei);
+    if (balance < amountInWei) {
+      throw new Error(
+        "Su saldo es insuficiente para realizar esta transacción."
+      );
+    }
+    const data = dgsolContract.methods
+      .transferWithFixedFeeBNB(address, amountInWei)
+      .encodeABI();
+    console.log(data);
+    const gasPrice = web3.utils.toWei("10", "gwei");
+    const tx = {
+      from: account.address,
+      to: address,
+      value: amountInWei,
+      gas: 3000000,
+      gasPrice,
+      data,
+    };
+    console.log(tx);
+    const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+    console.log(signedTx);
+    const txReceipt = await web3.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+    console.log(txReceipt);
+    return txReceipt;
+  } catch (error) {
+    console.error("Error estimating gas:", error);
+    throw error;
+  }
+};
+
+export const transferDgsolToAccount = async (
+  address: string,
+  amount: number,
+  privateKey: string
+) => {
+  try {
+    const web3 = new Web3(NODO);
+    const account = web3.eth.accounts.privateKeyToAccount("0x" + privateKey);
+    const dgsolContract = new web3.eth.Contract(dgsolABI, DGSOLCONTRACT) as any;
+    const balance = await dgsolContract.methods
+      .balanceOf(account.address)
+      .call();
+    const amountInWei = amount * 1e18;
+    if (balance < amountInWei) {
+      throw new Error(
+        "Su saldo es insuficiente para realizar esta transacción."
+      );
+    }
+    const gasPrice = web3.utils.toWei("10", "gwei");
+    const data = dgsolContract.methods
+      .transfer(address, amountInWei)
+      .encodeABI();
+    const tx = {
+      from: account.address,
+      to: DGSOLCONTRACT,
+      gasPrice,
+      gas: 3000000,
+      data,
+    };
+    const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+    const txReceipt = await web3.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+    return txReceipt;
+  } catch (error) {
+    console.error("Error estimating gas:", error);
+    throw error;
+  }
+};
+
+export const transferDGSOLToAccount = async (
+  address: string,
+  amount: number,
+  privateKey: string
+) => {
+  try {
+    const web3 = new Web3(NODO);
+    const account = web3.eth.accounts.privateKeyToAccount("0x" + privateKey);
+    const dgsolContract = new web3.eth.Contract(dgsolABI, DGSOLCONTRACT) as any;
+    const balance = await dgsolContract.methods
+      .balanceOf(account.address)
+      .call();
+    const amountInWei = amount * 1e18;
+    if (balance < amountInWei) {
+      throw new Error(
+        "Su saldo es insuficiente para realizar esta transacción."
+      );
+    }
+    const gasPrice = web3.utils.toWei("10", "gwei");
+    const data = dgsolContract.methods
+      .transferDGSOLWithComission(address, amountInWei)
+      .encodeABI();
+    const tx = {
+      from: account.address,
+      to: DGSOLCONTRACT,
+      gasPrice,
+      gas: 3000000,
+      data,
+    };
+    const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+    console.log(signedTx);
+    const txReceipt = await web3.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+    console.log(txReceipt);
+    return txReceipt;
+  } catch (error) {
+    console.error("Error estimating gas:", error);
+    throw error;
+  }
+};
+
+export const transferUSDTToAccount = async (
+  address: string,
+  amount: number,
+  privateKey: string
+) => {
+  try {
+    const web3 = new Web3(NODO);
+    const account = web3.eth.accounts.privateKeyToAccount("0x" + privateKey);
+    const usdtContract = new web3.eth.Contract(dgsolABI, DGSOLCONTRACT) as any;
+    const amountInWei = amount * 1e18;
+    await checkAndApproveAllowance(
+      DGSOLCONTRACT,
+      TOKENS.USDT.address,
+      ethers.utils.parseUnits(amount.toString(), 18),
+      privateKey
+    );
+    const gasPrice = web3.utils.toWei("10", "gwei");
+    const data = usdtContract.methods
+      .transferTokenWithCommission(
+        TOKENS.USDT.address,
+        account.address,
+        address,
+        amountInWei
+      )
+      .encodeABI();
+
+    const tx = {
+      from: account.address,
+      to: address,
+      gasPrice,
+      gas: 3000000,
+      data,
+    };
+    const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+    console.log(signedTx)
+    const txReceipt = await web3.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+    console.log(txReceipt);
+    return txReceipt;
+  } catch (error) {
+    console.error("Error estimating gas:", error);
+    throw error;
   }
 };

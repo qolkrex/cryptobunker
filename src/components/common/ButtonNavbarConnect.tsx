@@ -111,7 +111,7 @@ export const ButtonNavbarConnect: FC<Props> = ({ openModal, setOpenModal }) => {
               icon: "pi pi-sign-out",
               command: () => {
                 logout();
-                signOut()
+                signOut();
               },
             },
           ],
@@ -263,21 +263,24 @@ export const ButtonNavbarConnect: FC<Props> = ({ openModal, setOpenModal }) => {
                 className="size-7"
               />
               <span className="ml-2">
-                {data?.user?.address ? `${data.user.address.substring(0, 10)}...` : "Connect Wallet"}
+                {data?.user?.address &&
+                  `${data.user.address.substring(0, 10)}...`}
               </span>
             </ButtonBase>
           ) : (
-            <ButtonBase
-              variant={"alert"}
-              onClick={async (event) => {
-                menuLeft.current.toggle(event);
-              }}
-              className="rounded-full bg-white flex items-center gap-2 px-3 py-0 text-black hover:text-white hover:bg-primary hover:ring-blue-500"
-            >
-              <span className="ml-2">
-                {data?.user?.address ? `${data.user.address.substring(0, 10)}...` : "Connect Wallet"}
-              </span>
-            </ButtonBase>
+            data?.user?.address && (
+              <ButtonBase
+                variant={"alert"}
+                onClick={async (event) => {
+                  menuLeft.current.toggle(event);
+                }}
+                className="rounded-full bg-white flex items-center gap-2 px-3 py-0 text-black hover:text-white hover:bg-primary hover:ring-blue-500"
+              >
+                <span className="ml-2">
+                  {data.user.address.substring(0, 10)}...
+                </span>
+              </ButtonBase>
+            )
           )}
 
           <Menu

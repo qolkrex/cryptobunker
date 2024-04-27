@@ -3,8 +3,9 @@ import Web3 from "web3";
 import USDT_ABI from "./abi/usdtABI.json";
 import GMKNFTABI from "./abi/gmkNFTABI.json";
 import ERC20ABI from "@/config/abi/erc20.json";
-import { DGSOLCONTRACT, GMKNFTADDRESS } from "@/data/coinsData";
+import { DGSOLCONTRACT, DGSOLCONTRACTPRICE, GMKNFTADDRESS } from "@/data/coinsData";
 import { IRound } from "@/app/dashboard/rounds/Web3Client";
+import dgsolpriceABI from '@/utils/contract/abi/dgsolpriceABI.json';
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(

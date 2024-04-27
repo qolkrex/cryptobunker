@@ -2,12 +2,16 @@
 import ButtonBase from "@/components/common/buttons/ButtonBase";
 import { TOKENS } from "@/config";
 import {
+  getETHBalance,
   getGMKBalanceFromAddress,
   getUsdtBalance,
 } from "@/utils/contract/contractInteraction";
 import {
   getPrivateKey,
+  transferBnbToAccount,
+  transferDGSOLToAccount,
   transferForAddress,
+  transferUSDTToAccount,
 } from "@/utils/contract/contractWithoutWalletInteraction";
 import { useSession } from "next-auth/react";
 import { Button } from "primereact/button";
@@ -47,6 +51,12 @@ export default function PageSendAndRecive() {
       image: "/img/crypto/dgsol-token-2-white.webp",
       address: DGSOLCONTRACT,
     },
+    BNB: {
+      balance: 0,
+      symbol: "BNB",
+      image: "/img/crypto/BNB.png",
+      address: "0x0",
+    },
   });
   // console.log(address);
   const { data } = useSession();
@@ -67,6 +77,7 @@ export default function PageSendAndRecive() {
 
   console.log("totalToPay", totalToPay);
   console.log("commission", commission);
+  console.log("activeCoin", activeCoin);
 
   // TODO: No enviar NFT a esta direccion
   /*
@@ -187,12 +198,25 @@ export default function PageSendAndRecive() {
         };
       });
     });
+
+    getETHBalance(data?.user?.address || "").then((res) => {
+      console.log(res);
+      setCoins((oldState) => {
+        return {
+          ...oldState,
+          BNB: {
+            ...oldState.BNB,
+            balance: Number(res),
+          },
+        };
+      });
+    });
   };
 
   useEffect(() => {
     getBalanceInSendAndReceive();
   }, [data]);
-  
+
   // use effect to click outside the select and close it
   useEffect(() => {
     const clickOutside = (e: MouseEvent) => {
@@ -322,7 +346,7 @@ export default function PageSendAndRecive() {
                     </div>
                   </div>
                   <div
-                    className="flex flex-col "
+                    className="flex flex-col border-b border-b-white"
                     onClick={() => {
                       setActiveCoin("DGSOL");
                       setShowSelect(false);
@@ -338,6 +362,25 @@ export default function PageSendAndRecive() {
                         <span>DGSOL</span>
                       </div>
                       <span>{gmkBalanceOf.toFixed(4)} DGSOL</span>
+                    </div>
+                  </div>
+                  <div
+                    className="flex flex-col "
+                    onClick={() => {
+                      setActiveCoin("BNB");
+                      setShowSelect(false);
+                    }}
+                  >
+                    <div className="flex justify-between items-center px-4 w-full hover:bg-gray-500 py-5 cursor-pointer">
+                      <div className="flex items-center gap-2">
+                        <img
+                          src="/img/crypto/BNB.png"
+                          alt="bnb coin"
+                          className="w-8 h-8 rounded-full"
+                        />
+                        <span>BNB</span>
+                      </div>
+                      <span>{coins["BNB"].balance.toFixed(4)} BNB</span>
                     </div>
                   </div>
                 </div>
@@ -385,17 +428,24 @@ export default function PageSendAndRecive() {
               </div>
               {/* COMISION TAX 0.0009% (FCS) */}
               <div className="flex items-center justify-between gap-2">
-                <Tooltip target="#fcs-text" position="top" className="max-w-[400px]">
+                <Tooltip
+                  target="#fcs-text"
+                  position="top"
+                  className="max-w-[400px]"
+                >
                   <p className="text-sm">
                     Es un pequeño porcentaje aplicado a cada transacción en la
-                    plataforma CryptoBunker. <br/> Este fee se destina al staking,
-                    donde los usuarios pueden bloquear sus activos para ayudar a
-                    asegurar la red y ganar recompensas.
+                    plataforma CryptoBunker. <br /> Este fee se destina al
+                    staking, donde los usuarios pueden bloquear sus activos para
+                    ayudar a asegurar la red y ganar recompensas.
                   </p>
                 </Tooltip>
                 <p id="fcs-text">
                   Comisión -{" "}
-                  <span className="font-bold text-sm">0.3% (FCS) (?)</span>
+                  <span className="font-bold text-sm">
+                    {/* {activeCoin === "BNB" ? "0.30USD" : "0.3% "} (FCS) (?) */}
+                    0.30USD (FCS) (?)
+                  </span>
                 </p>
                 <p>
                   {commission.toFixed(4) || 0} {activeCoin}
@@ -404,7 +454,7 @@ export default function PageSendAndRecive() {
               <div className="flex items-center justify-between gap-2">
                 <p>Total a enviar</p>
                 <p>
-                  {( Number(amountToSend) - Number(commission)).toFixed(4)}{" "}
+                  {(Number(amountToSend) - Number(commission)).toFixed(4)}{" "}
                   {activeCoin}
                 </p>
               </div>
@@ -522,6 +572,40 @@ export default function PageSendAndRecive() {
                     passwordSecret,
                     userSession?.user?.address as string
                   );
+                  console.log(privateKey);
+                  if (activeCoin === "BNB") {
+                    console.log("BNB");
+                    const res = await transferBnbToAccount(
+                      sendTo,
+                      amountToSend,
+                      privateKey
+                    );
+                    setShowDialog(false);
+                    console.log(res);
+                    return;
+                  }
+                  if (activeCoin === "DGSOL") {
+                    console.log("DGSOL");
+                    const resp = await transferDGSOLToAccount(
+                      sendTo,
+                      amountToSend,
+                      privateKey
+                    );
+                    setShowDialog(false);
+                    console.log(resp);
+                    return;
+                  }
+                  if (activeCoin === "USDT") {
+                    console.log("USDT");
+                    const res = await transferUSDTToAccount(
+                      sendTo,
+                      amountToSend,
+                      privateKey
+                    );
+                    setShowDialog(false);
+                    console.log(res);
+                    return;
+                  }
                   const res = await transferForAddress(
                     sendTo,
                     amountToSend,
