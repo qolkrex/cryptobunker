@@ -338,18 +338,27 @@ export const Board = ({ slipage, setOpen, reserves }: ISwap) => {
       //     reject(e);
       //   });
       if (from === "USDT" || from === "BUSD") {
+        const price = amount / buyPrice;
+        // 0.3% comission
+        const amountTo = price - price * 0.003;
         resolve({
-          amountTo: amount / buyPrice,
+          amountTo,
         });
       }
       if (from === "BNB") {
+        const price = amount / dgsolPriceInBNB;
+        // 0.3% comission
+        const amountTo = price - price * 0.003;
         resolve({
-          amountTo: amount / dgsolPriceInBNB,
+          amountTo,
         });
       }
       if (from === "DGSOL") {
+        const price = amount / sellPrice;
+        // 0.3% comission
+        const amountTo = price - price * 0.003;
         resolve({
-          amountTo: amount * sellPrice,
+          amountTo,
         });
       }
     });
